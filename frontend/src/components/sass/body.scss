@@ -1,0 +1,47 @@
+@charset "UTF-8";
+// body.scss
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.center-group {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+
+    .center {
+        width: calc(20% - 20px); /* 20% del ancho del contenedor menos el espacio entre elementos */
+        transition: visibility 0.3s ease; /* Agrega una transición para hacer que la visibilidad sea más suave */
+
+        .fila1 {
+            text-align: left;
+            margin-left: 20px;
+
+            img {
+                max-width: 70%;
+                height: 50%;
+                margin-bottom: 10px;
+                border-radius: 10px; /* Borde redondeado de 10px */
+                width: 350px;
+                background-color: rgb(255, 255, 255);
+
+            }
+
+            h1 {
+                font-size: 1.2rem;
+                margin-bottom: 5px;
+                color: black;
+            }
+
+            p {
+                margin: 5px 0;
+                color: black;
+            }
+        }
+    }
+}

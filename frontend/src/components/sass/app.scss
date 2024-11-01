@@ -1,0 +1,30 @@
+@charset "UTF-8";
+ .body {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.app-container {
+  background-color: #B7B7B7;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: none; /* Elimina el límite de tamaño máximo */
+  border: none; /* Elimina el borde */
+  
+}
+
+.contenido-debajo {
+  margin-top: 100px; /* Ajusta la cantidad según el tamaño de tu encabezado */
+  border: none; /* Elimina el borde */
+}
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; // 100% de la altura de la ventana
+  width: 100vw; // 100% de la anchura de la ventana
+}
+

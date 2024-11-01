@@ -1,0 +1,153 @@
+@charset "UTF-8";
+/* Estilo del header */
+.header {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff; /* Color de fondo blanco */
+  color: #0c58a3; /* Color del texto */
+  padding: 0px; /* Espaciado interno de 10px */
+}
+
+/* Estilo de la parte superior del header */
+.top {
+  display: flex;
+  justify-content: space-between; /* Espacio uniforme entre los elementos */
+  align-items: center; /* Centra verticalmente los elementos */
+}
+
+/* Estilo del lado izquierdo del header */
+.left {
+  display: flex;
+  align-items: center; /* Centra verticalmente los elementos */
+  margin-left: 20px;
+}
+.left a {
+  display: flex;
+  align-items: center; /* Centra verticalmente los elementos */
+  margin-left: 20px;
+}
+/* Estilo del centro del header */
+.center {
+  flex: 1; /* Ocupa todo el espacio disponible */
+  display: flex;
+  justify-content: center; /* Centra horizontalmente los elementos */
+}
+
+/* Estilo del lado derecho del header */
+.right {
+  display: flex;
+  align-items: center; /* Centra verticalmente los elementos */
+  margin-right: 100px;
+}
+
+/* Estilo del logo */
+.logo {
+  width: 120px; /* Ancho fijo de 120px */
+  margin-right: 5px; /* Margen derecho de 5px */
+}
+
+/* Estilo del título */
+.title {
+  font-size: 18px; /* Tamaño de fuente de 18px */
+  font-weight: 500; /* Agrega negrita al texto */
+}
+
+/* Estilo del campo de búsqueda */
+.search {
+  display: flex;
+  align-items: center; /* Centra verticalmente los elementos */
+  border: 0px solid #f15a2b; /* Borde de 2px sólido de color naranja */
+  border-radius: 5px; /* Borde redondeado de 5px */
+  background-color: #fff; /* Fondo blanco */
+}
+
+/* Estilo del campo de búsqueda */
+.search-input {
+  border: none; /* Sin borde */
+  padding: 5px; /* Espaciado interno de 5px */
+  width: 300px; /* Ancho fijo de 300px */
+  background-color: transparent; /* Fondo transparente */
+  border: 2px solid #f15a2b; /* Borde de 2px sólido de color naranja */
+  border-radius: 5px; /* Borde redondeado de 5px */
+  color: #000; /* Color del texto negro */
+  /* Evita que el color del borde cambie al enfocar el campo */
+  &:focus {
+    outline: none; /* Elimina el contorno de enfoque */
+    border-color: #f15a2b; /* Mantener el color naranja */
+  }
+
+  &::placeholder { /* Estilo del placeholder */
+    color: #f15a2b; /* Color naranja */
+  }
+}
+
+/* Estilo del ícono de búsqueda */
+.search-icon {
+  margin: 0 5px; /* Margen de 0 a 5px en los lados */
+  color: #f15a2b; /* Color naranja */
+  cursor: pointer; /* Cursor apuntador */
+}
+
+/* Estilo de los botones de carrito y cuenta */
+.cart-button, .account-button {
+  background-color: #ffffff; /* Color de fondo blanco */
+  color: #000000; /* Color del texto negro */
+  border: none; /* Sin borde */
+  padding: 5px 10px; /* Espaciado interno de 5px arriba y abajo, 10px a los lados */
+  margin-left: 10px; /* Margen izquierdo de 10px */
+  cursor: pointer; /* Cursor apuntador */
+}
+
+/* Estilo del botón de cuenta */
+.account-button {
+  background-color: #f15a2b; /* Color naranja */
+  color: #ffffff; /* Color del texto blanco */
+  border-radius: 5px; /* Borde redondeado de 5px */
+}
+
+/* Estilo de la parte inferior del header (barra gris) */
+.bottom {
+  background-color: #E9E5E5; /* Color de fondo gris */
+  padding: 10px; /* Espaciado interno de 10px */
+}
+
+/* Estilo de la barra gris con botones */
+.gray-bar {
+  display: flex;
+  justify-content: space-between; /* Espacio uniforme entre los elementos */
+  width: 100%; /* Ancho del 100% */
+}
+
+
+
+/* Estilo del botón gris */
+.gray-button {
+  background-color: #f15a2b; /* Color naranja */
+  color: #ffffff; /* Color del texto blanco */
+  border: none; /* Sin borde */
+  padding: 2px 10px; /* Espaciado interno de 2px arriba y abajo, 10px a los lados */
+  border-radius: 5px; /* Borde redondeado de 5px */
+  cursor: pointer; /* Cursor apuntador */
+  margin: 0 75px; /* Margen horizontal de 5px */
+  width:150px ;
+}
+
+.gray-button {
+  background-color: #f15a2b; /* Color naranja */
+  color: #ffffff; /* Color del texto blanco */
+  border: none; /* Sin borde */
+  padding: 2px 10px; /* Espaciado interno de 2px arriba y abajo, 10px a los lados */
+  border-radius: 5px; /* Borde redondeado de 5px */
+  cursor: pointer; /* Cursor apuntador */
+  margin: 0 75px; /* Margen horizontal de 5px */
+  width:150px ;
+}
+
+.gray-button a {
+  color: #ffffff; /* Color del texto blanco */
+  cursor: pointer; /* Cursor apuntador */
+}
+
+.gray-button a:hover {
+  color: #ffffff; /* Mantener el color del texto blanco cuando el cursor está sobre él */
+}

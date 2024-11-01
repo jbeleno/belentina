@@ -1,0 +1,74 @@
+// bodyLogin.scss
+@charset "UTF-8";
+
+.page-container {
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  margin-top: 100px;
+  margin-bottom: 150px;
+}
+
+.medicine-details {
+  display: flex;
+  margin-left: 150px;
+  margin-bottom: 50px;
+
+  .medicine-image {
+    margin-right: 40px; // Ajusta el margen según necesites
+    max-width: 400px; // Establece el ancho máximo de la imagen
+    height: auto; // Mantiene la proporción del aspecto al ajustar el ancho
+  }
+
+  .medicine-info {
+    flex: 1;
+
+    .centered-paragraph {
+      margin-bottom: 10px; // Agrega un margen inferior entre los párrafos
+      color: #0c58a3; // Color azul para los textos
+      font-size: 20px;
+    }
+
+    .buy-button {
+      margin-left: 30px; // Ajusta el margen derecho del botón "Comprar"
+      background-color: #0c58a3; // Color azul para el fondo del botón
+      color: #f15a2b; // Color blanco para el texto del botón
+      border: none; // Quita el borde del botón
+      border-radius: 40px; // Ajusta el radio de borde según necesites
+      padding: 14px 20px; // Ajusta el padding según necesites
+    }
+
+    span {
+      display: inline-block; // Hace que el span sea un bloque en línea
+      width: 30px; // Ajusta el ancho del span según necesites
+      text-align: center; // Centra el texto dentro del span
+      font-weight: 1000;
+    }
+
+    .centered-header {
+      color: #f15a2b; // Color naranja para el texto
+    }
+
+    .orange-text {
+      color: #f15a2b;
+    }
+
+    .button12 {
+      background-color: #0c58a3; // Color azul para el fondo del botón
+      color: #f15a2b; // Color blanco para el texto del botón
+      border: none; // Quita el borde del botón
+      border-radius: 30px; // Ajusta el radio de borde según necesites
+      padding: 14px 20px; // Ajusta el padding según necesites
+      margin-left: 10px;
+    }
+
+    .ver-mas {
+      background-color: #0c58a3; // Color azul para el fondo del botón
+      color: #f15a2b; // Color blanco para el texto del botón
+      border: none; // Quita el borde del botón
+      border-radius: 30px; // Ajusta el radio de borde según necesites
+      padding: 14px 20px; // Ajusta el padding según necesites
+    }
+    
+
+  }
+}

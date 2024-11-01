@@ -1,0 +1,83 @@
+// bodyLogin.scss
+
+@charset "UTF-8";
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ajusta la altura al 100% del viewport */
+  }
+
+  h2 {
+    color: black; /* Color del texto */
+  }
+  
+  .form-group {
+    margin-bottom: 1rem; /* Espacio entre elementos del formulario */
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    background-color: white; /* Fondo blanco para los casilleros de correo y contraseña */
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 0.5rem; /* Espaciado interno */
+    margin-top: 0.5rem; /* Espacio encima del casillero */
+    width: 400px; /* Ancho completo */
+    box-sizing: border-box; /* La anchura incluye el padding y el borde */
+    color: black
+  }
+  
+  .login-button{
+    margin-top: 1rem; /* Espacio encima del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    width: 100%; /* Ancho completo */
+    padding: 0.7rem; /* Espaciado interno */
+    height: 2.5rem; /* Altura del botón */
+    text-align: center;
+    line-height: 2px;
+  }
+
+
+  .register-button{
+    margin-top: 1rem; /* Espacio encima del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    width: 10%; /* Ancho completo */
+    padding: 0.7rem; /* Espaciado interno */
+    height: 2.5rem; /* Altura del botón */
+    text-align: center;
+    line-height: 2px;
+  }
+  
+  .google-login {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem; /* Espacio encima del botón de Google */
+    width: 400px; /* Ancho del contenedor del botón de Google */
+    background-color: white;
+    color: black;
+    padding: 0.7rem; /* Espaciado interno del contenedor */
+    border-radius: 5px; /* Bordes redondeados del contenedor */
+  }
+
+  .google-logo {
+    width: 20px; /* Tamaño del logo de Google */
+    margin-right: 8.5rem; /* Espacio entre el logo y el texto */
+  }
+  
+  .google-login-text {
+    flex: 1; /* Permite que el texto ocupe el espacio restante */
+    text-align: left; /* Alinea el texto a la izquierda */
+  }
+
+  p {
+    margin-top: 1rem; /* Espacio encima del párrafo */
+    color: white; /* Color del texto */
+  }
+  
+  p span {
+    color: black; /* Cambia el color de los elementos span a negro */
+  }
+  

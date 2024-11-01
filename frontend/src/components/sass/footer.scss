@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+.footer {
+  background-color: #fff; /* Color de fondo del footer */
+  color: #333; /* Color del texto en el footer */
+  padding: 20px; /* Espaciado interno del footer */
+  display: flex; /* Utiliza un diseño flexible */
+  justify-content: space-between; /* Distribuye los elementos de forma equitativa */
+}
+
+.content {
+  display: flex; /* Utiliza un diseño flexible */
+  justify-content: space-between; /* Distribuye los elementos de forma equitativa */
+  width: 100%; /* Ancho completo */
+}
+
+.logo {
+  display: flex; /* Utiliza un diseño flexible */
+  align-items: center; /* Alinea los elementos verticalmente */
+}
+
+.logo-img {
+  width: 150px; /* Ancho fijo de 150px */
+  margin-right: 10px; /* Margen derecho de 10px */
+}
+
+.logo-text {
+  display: flex; /* Utiliza un diseño flexible */
+  flex-direction: column; /* Apila los elementos verticalmente */
+}
+
+.logo-text p {
+  margin: 0; /* Elimina el margen predeterminado */
+}
+
+.logo-text p:first-child {
+  color: #0c58a3; /* Color azul para el texto "Drogueria Belentina" */
+  font-size: 20px; /* Tamaño de fuente para "Drogueria Belentina" */
+  white-space: nowrap; /* Evita el salto de línea */
+  font-weight: 500; /* Agrega negrita al texto */
+}
+
+.logo-text p a {
+  color: #f15a2b; /* Color naranja para el texto "Sobre nosotros" */
+  font-size: 20px; /* Tamaño de fuente para "Sobre nosotros" */
+  white-space: nowrap; /* Evita el salto de línea */
+  font-weight: 500; /* Agrega negrita al texto */
+}
+
+.contact {
+  /* Estilos para la columna "Contactanos" */
+  text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.contact h3 {
+  color: #f15a2b; /* Color naranja para el texto "Contactanos" */
+  margin: 0; /* Elimina el margen predeterminado */
+  margin-bottom: 30px;
+}
+
+.contact p {
+  color: #000000; /* Color negro para el texto */
+  margin: 0; /* Elimina el margen predeterminado */
+  font-weight: 600; /* Agrega negrita al texto */
+}
+
+.social-icons {
+  /* Estilos para la columna de redes sociales */
+  display: flex; /* Utiliza un diseño flexible */
+  align-items: center; /* Alinea los elementos verticalmente */
+}
+
+.social-icons-img {
+  width: 160px; /* Ancho fijo de 120px */
+  height: 20px; /* Altura fija de 60px */
+  border-top: 1px solid #ffffff; /* Borde superior de 1px sólido de color blanco */
+  padding-top: 10px; /* Espaciado interno superior de 10px */
+  margin-left: 80px;
+}

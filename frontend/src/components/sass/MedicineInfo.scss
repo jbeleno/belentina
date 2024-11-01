@@ -1,0 +1,30 @@
+// MedicineInfo.scss
+.MedicineInfo {
+  text-align: justify;
+  margin-left: 10px;
+  width: 90%;
+
+
+
+  p {
+    margin: 10px 0;
+    color: #0c58a3
+  }
+
+  strong {
+    font-weight: bold;
+    color: #f15a2b;
+  }
+
+  h2 {
+    color: #0c58a3;
+  }
+}
+
+.info-divider {
+  border-top: 5px solid #ccc; /* Aumenta el grosor de la línea gris */
+  background-color: rgba(204, 204, 204, 0.3); /* Color de fondo con transparencia */
+  max-width: 1000px; /* Ancho máximo del contenedor principal */
+  margin: 0 auto; /* Centra horizontalmente el contenedor */
+}
+

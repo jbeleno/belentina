@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.body-about {
+    text-align: center; // Centra el contenido horizontalmente
+
+    h1 {
+        color: black; // Color del texto en negro
+        margin-bottom: 60px; // Espacio entre el h1 y el párrafo
+        text-align: left; // Alinea el texto del h1 a la izquierda
+        margin-left: 70px;
+        margin-top: 50px;
+    }
+
+    
+
+    p {
+        color: black; // Color del texto en negro
+        margin-bottom: 25px; // Espacio entre el párrafo y las imágenes
+        margin-left: 70px;
+        font-weight: 600;
+        text-align: left; // Alineación a la izquierda
+        font-size:22px;
+        
+    }
+
+    .images-container {
+        display: flex; // Utiliza flexbox para las imágenes
+        justify-content: center; // Centra las imágenes horizontalmente
+        gap: 5px; // Espacio entre las imágenes
+    }
+
+    img {
+        margin: 15px; // Espacio entre las imágenes
+        margin-bottom: 70px;
+        width: 450px; // Ancho deseado para las imágenes
+        height: 300px; // Alto deseado para las imágenes
+    }
+}
