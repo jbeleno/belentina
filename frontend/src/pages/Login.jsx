@@ -58,7 +58,9 @@ const Login = () => {
         <button type="submit" className="login-button">Ingresar</button>
         {error && <p className="error">{error}</p>}
       </form>
+      <a href='/register'>
       <button type="submit" className="register-button">Registrarse</button>
+      </a>
       <p>────────────────────────────────────────────────</p>
     </div>
   );

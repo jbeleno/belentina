@@ -8,8 +8,8 @@
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: 50px;
+    margin-bottom: 50px;
   
     .Company_logo {
       width: 150px;
@@ -58,6 +58,12 @@
             color: #f15a2b; // Color del texto de placeholder
             opacity: 1; // Asegurar que el opacity no afecte al color
           }
+        }
+        .input-email {
+          width: 94%;
+        }
+        .input-password {
+          width: 94%; // O un valor fijo si es necesario
         }
       }
   

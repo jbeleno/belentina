@@ -50,6 +50,7 @@ const Register = () => {
           <label>Email</label>
           <input
             type="email"
+            className="input-email"
             name="userEmail"
             value={formData.userEmail}
             onChange={handleChange}
@@ -83,6 +84,7 @@ const Register = () => {
           <label>Contraseña</label>
           <input
             type="password"
+            className="input-password"
             name="userPassword"
             value={formData.userPassword}
             onChange={handleChange}
