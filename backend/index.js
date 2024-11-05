@@ -5,7 +5,9 @@ import cors from "cors";
 import conectarDB from "./config/db.js";
 import usuarioRoutes from './routes/usuarioRoutes.js';
 import proyectoRoutes from './routes/proyectoRoutes.js';
-import authRoutes from './routes/authRoutes.js'; // Agrega esta línea para importar authRoutes
+import authRoutes from './routes/authRoutes.js';
+import categoriaRoutes from './routes/categoriaRoutes.js';
+import productoRoutes from './routes/productoRoutes.js';
 
 // Configuración de la aplicación
 const app = express();
@@ -20,11 +22,11 @@ conectarDB();
 const whitelist = ['http://localhost:5173'];
 const corsOption = {
     origin: function (origin, callback) {
-        if (whitelist.includes(origin)) {
-            // Permitir acceso a la API
+        if (!origin || whitelist.includes(origin)) {
+            // Permitir acceso a la API si el origin es permitido o si es una solicitud sin origin (como en Postman)
             callback(null, true);
         } else {
-            // Denegar acceso
+            // Denegar acceso si el origin no está permitido
             callback(new Error("Error de Cors"));
         }
     },
@@ -34,7 +36,9 @@ app.use(cors(corsOption));
 // Rutas de la API
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/proyectos', proyectoRoutes);
-app.use('/api/auth', authRoutes); // Agrega esta línea para habilitar la ruta de autenticación
+app.use('/api/auth', authRoutes);
+app.use('/api/categorias', categoriaRoutes);
+app.use('/api/productos', productoRoutes);
 
 // Configuración del puerto
 const PORT = process.env.PORT || 5000;
