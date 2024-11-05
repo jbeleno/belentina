@@ -2,7 +2,17 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const usuarioSchema = mongoose.Schema({
+    id_cliente: {
+        type: Number,
+        unique: true,
+        autoIncrement: true, // MongoDB no soporta auto-increment nativo como SQL, pero puedes manejarlo manualmente o con un plugin.
+    },
     nombre: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    apellido_cliente: {
         type: String,
         required: true,
         trim: true,
@@ -17,6 +27,19 @@ const usuarioSchema = mongoose.Schema({
         required: true,
         trim: true,
         unique: true,
+    },
+    telefono_cliente: {
+        type: String,
+        trim: true,
+    },
+    direccion_cliente: {
+        type: String,
+        trim: true,
+    },
+    fecha_registro: {
+        type: Date,
+        default: Date.now,
+        required: true,
     },
     token: {
         type: String,

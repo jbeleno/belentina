@@ -27,6 +27,10 @@ const productoSchema = new mongoose.Schema({
     fecha_vencimiento: {
         type: Date,
     },
+    imagen: {
+        type: String, // Aquí se almacenará el código Base64 de la imagen
+        trim: true,
+    },
     categoria: {
         type: String,
         maxlength: 50, // VARCHAR(50)

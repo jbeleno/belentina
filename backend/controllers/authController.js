@@ -1,15 +1,14 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 
 const users = [
-  { email: 'belentina@drogueria.com', password: bcrypt.hashSync('belentina123', 10) },
+  { email: 'belentina@drogueria.com', password: 'belentina123' },
 ];
 
 export const login = (req, res) => {
   const { email, password } = req.body;
   const user = users.find(u => u.email === email);
 
-  if (!user || !bcrypt.compareSync(password, user.password)) {
+  if (!user || user.password !== password) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
 
