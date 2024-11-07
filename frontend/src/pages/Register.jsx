@@ -1,71 +1,62 @@
-// src/pages/Register.jsx
-import React, { useState } from 'react';
-import '../components/sass/Register.scss';
-import Company_logo from '../assets/img/logo.png';
+// Register.jsx
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import '../components/sass/Register.scss';  // Asegúrate de que la ruta sea correcta
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    identification: '',
-    userEmail: '',
-    firstName: '',
-    lastName: '',
-    userPassword: '',
-    contact: '',
-    registrationDate: '',  
-    address: '',           
-    termsAccepted: false,
-    dataPolicyAccepted: false,
-  });
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [email, setEmail] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmarPassword, setConfirmarPassword] = useState("");
+  const [role, setRole] = useState("user"); // Puedes ajustar este valor si es necesario
+  const [mensajeError, setMensajeError] = useState(null);
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Agrega aquí la lógica de validación y envío del formulario
+
+    if (password !== confirmarPassword) {
+      setMensajeError('Las contraseñas no coinciden');
+      return;
+    }
+
+    const nuevoUsuario = {
+      nombre,
+      apellido_cliente: apellido,
+      email,
+      telefono_cliente: telefono,
+      direccion_cliente: direccion,
+      password,
+      role
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/usuarios', nuevoUsuario);
+      console.log(response.data);
+      navigate('/login');
+    } catch (error) {
+      console.error('Error al registrar:', error.response ? error.response.data : error);
+      setMensajeError(error.response ? error.response.data.msg : 'Hubo un error al registrar al usuario');
+    }
   };
 
   return (
     <div className="register-container">
-      <img src={Company_logo} alt="Company_logo" className="Company_logo" />
-      <h2>Crea una Cuenta</h2>
+      <h2>Registrarse</h2>
       <form onSubmit={handleSubmit} className="register-form">
-        <div className="input-group">
-          <label>Identificación</label>
-          <input
-            type="text"
-            name="identification"
-            value={formData.identification}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="input-group">
-          <label>Email</label>
-          <input
-            type="email"
-            className="input-email"
-            name="userEmail"
-            value={formData.userEmail}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
+        {mensajeError && <p className="error-message">{mensajeError}</p>}
+        
         <div className="input-group">
           <label>Nombre</label>
           <input
             type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
+            placeholder="Nombre"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
           />
         </div>
 
@@ -73,85 +64,68 @@ const Register = () => {
           <label>Apellido</label>
           <input
             type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
+            placeholder="Apellido"
+            value={apellido}
+            onChange={(e) => setApellido(e.target.value)}
+          />
+        </div>
+
+        <div className="input-group input-email">
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
         <div className="input-group">
+          <label>Teléfono</label>
+          <input
+            type="text"
+            placeholder="Teléfono"
+            value={telefono}
+            onChange={(e) => setTelefono(e.target.value)}
+          />
+        </div>
+
+        <div className="input-group">
+          <label>Dirección</label>
+          <input
+            type="text"
+            placeholder="Dirección"
+            value={direccion}
+            onChange={(e) => setDireccion(e.target.value)}
+          />
+        </div>
+
+        <div className="input-group input-password">
           <label>Contraseña</label>
           <input
             type="password"
-            className="input-password"
-            name="userPassword"
-            value={formData.userPassword}
-            onChange={handleChange}
-            required
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
         <div className="input-group">
-          <label>Celular de Contacto</label>
+          <label>Confirmar Contraseña</label>
           <input
-            type="text"
-            name="contact"
-            value={formData.contact}
-            onChange={handleChange}
-            required
+            type="password"
+            placeholder="Confirmar Contraseña"
+            value={confirmarPassword}
+            onChange={(e) => setConfirmarPassword(e.target.value)}
           />
         </div>
 
-        <div className="input-group">
-          <label>Fecha de Registro</label> 
-          <input
-            type="date"
-            name="registrationDate"  o
-            value={formData.registrationDate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="input-group">
-          <label>Dirección</label> 
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="checkbox-group">
-          <label>
-            <input
-              type="checkbox"
-              name="termsAccepted"
-              checked={formData.termsAccepted}
-              onChange={handleChange}
-              required
-            />
-            Acepto términos y condiciones de uso
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="dataPolicyAccepted"
-              checked={formData.dataPolicyAccepted}
-              onChange={handleChange}
-              required
-            />
-            Autorizo y acepto política de tratamiento de datos
-          </label>
-        </div>
-
-        <button type="submit" className="submit-button">Crear</button>
+        <button type="submit" className="submit-button">Registrarse</button>
       </form>
 
-      <p>¿Ya tienes una cuenta? <a href="/login">Ingresa</a></p>
+      <p>
+        ¿Ya tienes cuenta? <a href="/login">Inicia sesión</a>
+      </p>
     </div>
   );
 };

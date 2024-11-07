@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../components/sass/Login.scss';
 import axios from 'axios';
@@ -10,6 +10,21 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Verificar si ya está autenticado cuando el componente se monte
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    
+    if (token && role) {
+      // Si hay un token en el localStorage, redirigir según el rol
+      if (role === 'admin') {
+        navigate('/admin'); // Redirigir al panel de administración
+      } else if (role === 'user') {
+        navigate('/home'); // Redirigir al home
+      }
+    }
+  }, [navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -18,22 +33,31 @@ const Login = () => {
     try {
       // Realizar la solicitud POST al backend para autenticación
       const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+
+      // Revisar la respuesta del backend para asegurarnos de que se reciban los datos correctos
+      console.log('Respuesta del servidor:', response.data);
+
       const { token, role } = response.data;
 
-      // Almacenar el token y el rol en localStorage
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', role); // Guardar el rol del usuario en localStorage
+      // Verificar si la respuesta tiene token y rol antes de almacenarlos
+      if (token && role) {
+        // Almacenar el token y el rol en localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('role', role); // Guardar el rol del usuario en localStorage
 
-      // Redirigir según el rol del usuario
-      if (role === 'admin') {
-        navigate('/admin'); // Si es administrador, redirigir al panel de administración
-      } else if (role === 'user') {
-        navigate('/home'); // Si es usuario regular, redirigir al home
+        // Redirigir según el rol del usuario
+        if (role === 'admin') {
+          navigate('/admin'); // Si es administrador, redirigir al panel de administración
+        } else if (role === 'user') {
+          navigate('/home'); // Si es usuario regular, redirigir al home
+        } else {
+          setError('Rol de usuario no reconocido');
+        }
       } else {
-        setError('Rol de usuario no reconocido');
+        setError('No se recibieron datos válidos del servidor');
       }
     } catch (err) {
-      console.error(err);
+      console.error('Error en la solicitud de login:', err);
       setError('Credenciales inválidas');
     } finally {
       setLoading(false);

@@ -1,123 +1,125 @@
+/* Register.scss */
 .register-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-    margin-top: 50px;
-    margin-bottom: 50px;
-  
-    .Company_logo {
-      width: 150px;
-      margin-bottom: 20px;
-    }
-  
-    h2 {
-      font-size: 1.8em;
-      color: #0c58a3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  .Company_logo {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 1.8em;
+    color: #0c58a3;
+    margin-bottom: 15px;
+  }
+
+  .register-form {
+    width: 100%;
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
       margin-bottom: 15px;
-    }
-  
-    .register-form {
-      width: 100%;
-  
-      .input-group {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 15px;
-  
-        label {
-          font-size: 0.9em;
-          color: #0c58a3;
-          margin-bottom: 5px;
-          font-weight: bold; // Opcional para hacer el label más visible
-          transition: color 0.3s ease; // Transición para un efecto suave al cambiar de estado
-        }
-  
-        input {
-          padding: 10px;
-          border: 1px solid #0c58a3;
-          border-radius: 7px;
-          font-size: 1em;
-          transition: border-color 0.3s ease, box-shadow 0.3s ease; // Añadir transiciones para el borde y sombra
-          color: #f15a2b;
-          background-color: #fff;
-          width: 90%;
-  
-          &:focus {
-            outline: none;
-            border-color: #f15a2b;
-            box-shadow: 0 0 5px rgba(255, 174, 0, 0.3);
-          }
-  
-          &::placeholder {
-            color: #f15a2b; // Color del texto de placeholder
-            opacity: 1; // Asegurar que el opacity no afecte al color
-          }
-        }
-        .input-email {
-          width: 94%;
-        }
-        .input-password {
-          width: 94%; // O un valor fijo si es necesario
-        }
+
+      label {
+        font-size: 0.9em;
+        color: #0c58a3;
+        margin-bottom: 5px;
+        font-weight: bold; // Opcional para hacer el label más visible
+        transition: color 0.3s ease; // Transición para un efecto suave al cambiar de estado
       }
-  
-      .checkbox-group {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-  
-        label {
-          font-size: 0.9em;
-          color: #f15a2b;
-          display: flex;
-          align-items: center;
-          margin-bottom: 8px;
-  
-          input[type="checkbox"] {
-            margin-right: 8px;
-            accent-color: #0c58a3;
-          }
-        }
-      }
-  
-      .submit-button {
-        width: 100%;
-        padding: 12px;
-        background-color: #0c58a3;
-        color: #fff;
+
+      input {
+        padding: 10px;
+        border: 1px solid #0c58a3;
+        border-radius: 7px;
         font-size: 1em;
-        font-weight: bold;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-  
-        &:hover {
-          background-color: #f15a2b;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease; // Añadir transiciones para el borde y sombra
+        color: #000000;
+        background-color: #fff;
+        width: 90%;
+
+        &:focus {
+          outline: none;
+          border-color: #f15a2b;
+          box-shadow: 0 0 5px rgba(255, 174, 0, 0.3);
+        }
+
+        &::placeholder {
+          color: #f15a2b; // Color del texto de placeholder
+          opacity: 1; // Asegurar que el opacity no afecte al color
+        }
+      }
+
+      .input-email {
+        width: 94%;
+      }
+
+      .input-password {
+        width: 94%; // O un valor fijo si es necesario
+      }
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+
+      label {
+        font-size: 0.9em;
+        color: #f15a2b;
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+
+        input[type="checkbox"] {
+          margin-right: 8px;
+          accent-color: #0c58a3;
         }
       }
     }
-  
-    p {
-      font-size: 0.9em;
-      color: #0c58a3;
-      margin-top: 15px;
-  
-      a {
-        color: #f15a2b;
-        text-decoration: none;
-        font-weight: bold;
-  
-        &:hover {
-          text-decoration: underline;
-        }
+
+    .submit-button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0c58a3;
+      color: #fff;
+      font-size: 1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #f15a2b;
       }
     }
   }
-  
+
+  p {
+    font-size: 0.9em;
+    color: #0c58a3;
+    margin-top: 15px;
+
+    a {
+      color: #f15a2b;
+      text-decoration: none;
+      font-weight: bold;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
