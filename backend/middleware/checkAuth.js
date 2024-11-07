@@ -18,15 +18,15 @@ const checkAuth = async (req, res, next) => {
             return res.status(404).json({ msg: "Usuario no encontrado" });
         }
 
-        // Verifica que el ID del usuario coincida con el usuario específico
-        if (req.usuario._id.toString() !== "672a6c2dcd3774a32b45966a") {
-            return res.status(403).json({ msg: "Acceso denegado" });
+        // Verificar si el rol del usuario es 'admin'
+        if (req.usuario.role !== "admin") {
+            return res.status(403).json({ msg: "Acceso denegado: Solo administradores" });
         }
 
         next();
     } catch (error) {
         return res.status(401).json({ msg: 'Token no válido' });
     }
-}
+};
 
 export default checkAuth;

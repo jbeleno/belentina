@@ -44,6 +44,12 @@ const usuarioSchema = mongoose.Schema({
     token: {
         type: String,
     },
+    // Agrega el campo `role` aquí
+    role: {
+        type: String,
+        enum: ["user", "admin"], // Define los roles posibles
+        default: "user" // Asigna "user" como rol predeterminado
+    },
     confirmado: {
         type: Boolean,
         default: false,
@@ -53,7 +59,7 @@ const usuarioSchema = mongoose.Schema({
 });
 
 usuarioSchema.pre('save', async function(next) {
-    if (!this.isModified("password")){
+    if (!this.isModified("password")) {
         next();
     }
 
@@ -63,7 +69,7 @@ usuarioSchema.pre('save', async function(next) {
 
 usuarioSchema.methods.comprobarPassword = async function(passwordFormulario){
     return await bcrypt.compare(passwordFormulario, this.password);
-}
+};
 
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 export default Usuario;
