@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../components/sass/Login.scss';
@@ -17,6 +16,7 @@ const Login = () => {
     setError('');
 
     try {
+      // Realizar la solicitud POST al backend para autenticación
       const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
       const { token, role } = response.data;
 
@@ -26,9 +26,11 @@ const Login = () => {
 
       // Redirigir según el rol del usuario
       if (role === 'admin') {
-        navigate('/admin');
+        navigate('/admin'); // Si es administrador, redirigir al panel de administración
+      } else if (role === 'user') {
+        navigate('/home'); // Si es usuario regular, redirigir al home
       } else {
-        navigate('/home');
+        setError('Rol de usuario no reconocido');
       }
     } catch (err) {
       console.error(err);

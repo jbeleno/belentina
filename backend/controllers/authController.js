@@ -1,28 +1,20 @@
 import jwt from 'jsonwebtoken';
-import Usuario from '../models/Usuario.js'; // Asegúrate de que la ruta del modelo sea correcta
+import Usuario from '../models/Usuario.js';
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Buscar al usuario en la base de datos por su correo electrónico
     const usuario = await Usuario.findOne({ email });
 
-    // Si no se encuentra el usuario, devolver un error
     if (!usuario) {
       return res.status(401).json({ message: 'Usuario no encontrado' });
     }
 
-    // Comprobar si la contraseña es correcta
-    const esValido = await usuario.comprobarPassword(password); // método comprobarPassword
+    const esValido = await usuario.comprobarPassword(password);
 
     if (!esValido) {
       return res.status(401).json({ message: 'Credenciales incorrectas' });
-    }
-
-    // Comprobar si el usuario tiene el rol 'admin'
-    if (usuario.role !== 'admin') {
-      return res.status(403).json({ message: 'Acceso denegado: solo administradores' });
     }
 
     // Generar el JWT (Token)

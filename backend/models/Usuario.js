@@ -49,11 +49,7 @@ const usuarioSchema = mongoose.Schema({
         type: String,
         enum: ["user", "admin"], // Define los roles posibles
         default: "user" // Asigna "user" como rol predeterminado
-    },
-    confirmado: {
-        type: Boolean,
-        default: false,
-    },
+    }
 }, {
     timestamps: true
 });

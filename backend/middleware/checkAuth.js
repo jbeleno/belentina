@@ -12,7 +12,7 @@ const checkAuth = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.usuario = await Usuario.findById(decoded.id).select("-password -confirmado -token -createdAt -updatedAt -__v");
+        req.usuario = await Usuario.findById(decoded.id).select("-password -token -createdAt -updatedAt -__v");
 
         if (!req.usuario) {
             return res.status(404).json({ msg: "Usuario no encontrado" });

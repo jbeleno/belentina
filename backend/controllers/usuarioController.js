@@ -18,7 +18,6 @@ const registrar = async (req, res) => {
             ...req.body,
             role: role || 'user'  // Asigna 'user' por defecto si no se pasa otro rol
         });
-        usuario.token = generarId();
         await usuario.save();
         res.json({ msg: 'Usuario Creado Correctamente' });
     } catch (error) {
@@ -36,12 +35,6 @@ const autenticar = async (req, res) => {
         return res.status(404).json({ msg: error.message });
     }
 
-    // Comprobar si el usuario está confirmado
-    if (!usuario.confirmado) {
-        const error = new Error("Tu Cuenta no ha sido Confirmada");
-        return res.status(403).json({ msg: error.message });
-    }
-
     // Comprobar si la contraseña es correcta
     if (await usuario.comprobarPassword(password)) {
         res.json({
@@ -57,23 +50,24 @@ const autenticar = async (req, res) => {
     }
 };
 
-const confirmar = async (req, res) => {
-    const { token } = req.params;
-    const usuarioConfirmar = await Usuario.findOne({ token });
-    if (!usuarioConfirmar) {
-        const error = new Error("Token no Valido");
-        return res.status(403).json({ msg: error.message });
-    }
+// Eliminar la función de confirmación, ya que ya no es necesaria
+// const confirmar = async (req, res) => {
+//     const { token } = req.params;
+//     const usuarioConfirmar = await Usuario.findOne({ token });
+//     if (!usuarioConfirmar) {
+//         const error = new Error("Token no Valido");
+//         return res.status(403).json({ msg: error.message });
+//     }
 
-    try {
-        usuarioConfirmar.confirmado = true;
-        usuarioConfirmar.token = "";
-        await usuarioConfirmar.save();
-        res.json({ msg: 'Usuario Confirmado Correctamente' });
-    } catch (error) {
-        console.log(error);
-    }
-};
+//     try {
+//         usuarioConfirmar.confirmado = true;
+//         usuarioConfirmar.token = "";
+//         await usuarioConfirmar.save();
+//         res.json({ msg: 'Usuario Confirmado Correctamente' });
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
 
 const olvidePassword = async (req, res) => {
     const { email } = req.body;
@@ -132,4 +126,4 @@ const perfil = async (req, res) => {
     res.json(usuario);
 };
 
-export { registrar, autenticar, confirmar, olvidePassword, comprobarToken, nuevoPassword, perfil };
+export { registrar, autenticar, olvidePassword, comprobarToken, nuevoPassword, perfil };
