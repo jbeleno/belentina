@@ -1,9 +1,17 @@
 import Producto from '../models/Productos.js';
 
+// Categorías permitidas
+const categoriasPermitidas = [1, 2, 3, 4];
+
 // Crear un nuevo producto
 export const crearProducto = async (req, res) => {
     try {
         const { id_producto, nombre_producto, descripcion, precio, cantidad_disponible, fecha_vencimiento, categoria } = req.body;
+
+        // Validación de la categoría
+        if (!categoriasPermitidas.includes(categoria)) {
+            return res.status(400).json({ mensaje: "Categoría no válida. Solo se permiten las categorías: 1, 2, 3, 4." });
+        }
 
         const nuevoProducto = new Producto({
             id_producto,
@@ -54,6 +62,11 @@ export const actualizarProducto = async (req, res) => {
         const { id } = req.params;
         const { nombre_producto, descripcion, precio, cantidad_disponible, fecha_vencimiento, categoria } = req.body;
 
+        // Validación de la categoría
+        if (!categoriasPermitidas.includes(categoria)) {
+            return res.status(400).json({ mensaje: "Categoría no válida. Solo se permiten las categorías: 1, 2, 3, 4." });
+        }
+
         const productoActualizado = await Producto.findOneAndUpdate(
             { id_producto: id },
             { nombre_producto, descripcion, precio, cantidad_disponible, fecha_vencimiento, categoria },
@@ -74,14 +87,39 @@ export const actualizarProducto = async (req, res) => {
 export const eliminarProducto = async (req, res) => {
     try {
         const { id } = req.params;
+
+        // Buscar y eliminar el producto
         const productoEliminado = await Producto.findOneAndDelete({ id_producto: id });
 
         if (!productoEliminado) {
             return res.status(404).json({ mensaje: "Producto no encontrado" });
         }
 
-        res.status(200).json({ mensaje: "Producto eliminado exitosamente" });
+        res.status(200).json({ mensaje: "Producto eliminado exitosamente", productoEliminado });
     } catch (error) {
         res.status(500).json({ mensaje: "Error al eliminar el producto", error: error.message });
+    }
+};
+// Controlador para obtener productos por categoría
+export const obtenerProductosPorCategoria = async (req, res) => {
+    try {
+        const { categoria } = req.params;
+
+        // Validar que la categoría esté dentro de las categorías permitidas (esto puede hacerse desde el modelo también)
+        const categoriasPermitidas = [1, 2, 3, 4];  // Asumiendo que estas son las categorías válidas
+        if (!categoriasPermitidas.includes(parseInt(categoria))) {
+            return res.status(400).json({ mensaje: "Categoría no válida. Solo se permiten las categorías: 1, 2, 3, 4." });
+        }
+
+        // Buscar productos que coincidan con la categoría
+        const productos = await Producto.find({ categoria: parseInt(categoria) });
+
+        if (productos.length === 0) {
+            return res.status(404).json({ mensaje: "No se encontraron productos para esta categoría" });
+        }
+
+        res.status(200).json(productos);
+    } catch (error) {
+        res.status(500).json({ mensaje: "Error al obtener los productos por categoría", error: error.message });
     }
 };

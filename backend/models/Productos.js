@@ -32,9 +32,8 @@ const productoSchema = new mongoose.Schema({
         trim: true,
     },
     categoria: {
-        type: String,
-        maxlength: 50, // VARCHAR(50)
-        trim: true,
+        type: Number, // Ahora 'categoria' es un número (id_categoria)
+        required: true, // Es posible agregar la validación para asegurarse de que siempre se asigna una categoría válida
     }
 }, {
     timestamps: true
