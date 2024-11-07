@@ -38,7 +38,7 @@ const App = () => {
             <p className="centered-paragraph">Referencia: 116566</p>
             <p className="centered-paragraph">Incluye 0% de impuestos</p>
             <p className="centered-paragraph">Registro Sanitario: 2021M-0009447-R1</p>
-            <p className="centered-paragraph">10 unidades</p>
+            <p className="centered-paragraph">100 unidades</p>
             <p className="centered-paragraph orange-text">$2.000</p>
             <p className="centered-paragraph">
               Cantidad: 

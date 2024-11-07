@@ -14,16 +14,16 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    
+
+    // Redirigir solo si el token y el rol existen y la redirección aún no ha ocurrido
     if (token && role) {
-      // Si hay un token en el localStorage, redirigir según el rol
       if (role === 'admin') {
-        navigate('/admin'); // Redirigir al panel de administración
+        navigate('/admin', { replace: true }); // Redirigir al panel de administración
       } else if (role === 'user') {
-        navigate('/home'); // Redirigir al home
+        navigate('/home', { replace: true }); // Redirigir al home
       }
     }
-  }, [navigate]);
+  }, []); // Mantener arreglo vacío asegura que se ejecute solo al montar el componente
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,9 +47,9 @@ const Login = () => {
 
         // Redirigir según el rol del usuario
         if (role === 'admin') {
-          navigate('/admin'); // Si es administrador, redirigir al panel de administración
+          navigate('/admin', { replace: true }); // Redirigir al panel de administración
         } else if (role === 'user') {
-          navigate('/home'); // Si es usuario regular, redirigir al home
+          navigate('/home', { replace: true }); // Redirigir al home
         } else {
           setError('Rol de usuario no reconocido');
         }

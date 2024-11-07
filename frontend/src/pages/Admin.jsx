@@ -3,29 +3,35 @@ import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true); // Estado de carga para mostrar hasta verificar la autenticación
+  const [loading, setLoading] = useState(true); // Estado de carga inicial
+  const [isAuthorized, setIsAuthorized] = useState(false); // Estado para determinar si el usuario es autorizado
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const userRole = localStorage.getItem('role'); // Recupera el rol del usuario
+    const role = localStorage.getItem('role');
 
-    // Si no hay token o el rol no es admin, redirige
-    if (!token || userRole !== 'admin') {
-      navigate('/home');
+    // Verificar si hay token y si el rol es 'admin'
+    if (token && role === 'admin') {
+      setIsAuthorized(true); // Usuario es administrador
+      setLoading(false); // Deja de cargar porque la autorización es correcta
     } else {
-      setLoading(false); // Si el usuario tiene el token y el rol, dejamos de cargar
+      navigate('/home', { replace: true }); // Redirige solo si no está autorizado
     }
-  }, [navigate]);
+  }, [navigate]); // `navigate` en el array de dependencias garantiza que no se cicla
 
+  // Mostrar mensaje de carga mientras se verifica el estado de autorización
   if (loading) {
-    return <div>Cargando...</div>; // Muestra un cargando mientras se valida la sesión
+    return <div>Cargando...</div>;
   }
 
+  // Mostrar el contenido solo si el usuario está autorizado
   return (
-    <div>
-      <h1>Bienvenido al Panel de Administración</h1>
-      <p>Solo los usuarios autenticados con rol de administrador pueden ver esta página.</p>
-    </div>
+    isAuthorized && (
+      <div>
+        <h1>Bienvenido al Panel de Administración</h1>
+        <p>Solo los usuarios autenticados con rol de administrador pueden ver esta página.</p>
+      </div>
+    )
   );
 };
 

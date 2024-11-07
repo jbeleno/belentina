@@ -6,7 +6,7 @@ const categoriasPermitidas = [1, 2, 3, 4];
 // Crear un nuevo producto
 export const crearProducto = async (req, res) => {
     try {
-        const { id_producto, nombre_producto, descripcion, precio, cantidad_disponible, fecha_vencimiento, categoria } = req.body;
+        const { id_producto, nombre_producto, descripcion, descripcion_larga, precio, cantidad_disponible, fecha_vencimiento, categoria } = req.body;
 
         // Validación de la categoría
         if (!categoriasPermitidas.includes(categoria)) {
@@ -17,6 +17,7 @@ export const crearProducto = async (req, res) => {
             id_producto,
             nombre_producto,
             descripcion,
+            descripcion_larga,
             precio,
             cantidad_disponible,
             fecha_vencimiento,
@@ -105,14 +106,19 @@ export const obtenerProductosPorCategoria = async (req, res) => {
     try {
         const { categoria } = req.params;
 
-        // Validar que la categoría esté dentro de las categorías permitidas (esto puede hacerse desde el modelo también)
-        const categoriasPermitidas = [1, 2, 3, 4];  // Asumiendo que estas son las categorías válidas
+        // Verifica que la categoría sea válida
         if (!categoriasPermitidas.includes(parseInt(categoria))) {
             return res.status(400).json({ mensaje: "Categoría no válida. Solo se permiten las categorías: 1, 2, 3, 4." });
         }
 
-        // Buscar productos que coincidan con la categoría
-        const productos = await Producto.find({ categoria: parseInt(categoria) });
+        // Busca los productos y convierte el precio
+        let productos = await Producto.find({ categoria: parseInt(categoria) });
+
+        // Convertir precio de Decimal128 a string
+        productos = productos.map((producto) => ({
+            ...producto.toObject(),
+            precio: producto.precio.toString(), // Convertir a string para evitar formato $numberDecimal
+        }));
 
         if (productos.length === 0) {
             return res.status(404).json({ mensaje: "No se encontraron productos para esta categoría" });

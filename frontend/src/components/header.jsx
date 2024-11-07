@@ -33,14 +33,26 @@ const Header = () => {
         </div>
         <div className="bottom">
           <div className="gray-bar">
-            <a href='/medicine'>
-            <button href='/medicine' className="gray-button">
+            <a href='/medicamentos'>
+            <button href='/medicamentos' className="gray-button">
               Medicamentos
               </button>
             </a>
-            <button className="gray-button">Maquillaje</button>
-            <button className="gray-button">Cuidado Facial</button>
-            <button className="gray-button">Bebes</button>
+            <a href='/maquillaje'>
+            <button href='/maquillaje' className="gray-button">
+              Maquillaje
+              </button>
+            </a>
+            <a href='/bebes'>
+            <button href='/bebes' className="gray-button">
+              Bebes
+              </button>
+            </a>
+            <a href='/facial'>
+            <button href='/facial' className="gray-button">
+              Cuidado facial
+              </button>
+            </a>
           </div>
         </div>
       </header>

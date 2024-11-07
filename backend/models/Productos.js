@@ -16,6 +16,10 @@ const productoSchema = new mongoose.Schema({
         type: String, // TEXT
         trim: true,
     },
+    descripcion_larga:{
+        type: String, // TEXT
+        trim: true,
+    },
     precio: {
         type: mongoose.Types.Decimal128, // DECIMAL
         required: true,
