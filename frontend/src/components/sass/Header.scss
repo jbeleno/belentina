@@ -7,7 +7,16 @@
   color: #0c58a3; /* Color del texto */
   padding: 0px; /* Espaciado interno de 10px */
 }
+.error-container {
+  text-align: center;
+  margin-top: 10px;
+}
 
+.error-message {
+  color: #f15a2b;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
 /* Estilo de la parte superior del header */
 .top {
   display: flex;
@@ -86,6 +95,13 @@
   margin: 0 5px; /* Margen de 0 a 5px en los lados */
   color: #f15a2b; /* Color naranja */
   cursor: pointer; /* Cursor apuntador */
+}
+/* Header.scss */
+.error-message {
+  color: #f15a2b;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-align: center;
 }
 
 /* Estilo de los botones de carrito y cuenta */

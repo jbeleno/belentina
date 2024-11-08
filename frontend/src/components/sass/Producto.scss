@@ -1,0 +1,89 @@
+/* Producto.scss */
+.producto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #B7B7B7;
+  min-height: 100vh;
+}
+
+.producto-imagen {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  img {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 8px;
+  }
+}
+
+.producto-info {
+  flex: 1;
+  margin-left: 40px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
+
+  h1 {
+      font-size: 2rem;
+      color: #0c58a3;
+      margin-bottom: 15px;
+  }
+
+  .price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #f15a2b;
+      margin-bottom: 20px;
+  }
+
+  .descripcion {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 30px;
+      line-height: 1.6;
+  }
+
+  .agregar-carrito {
+      padding: 15px 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      background-color: #f15a2b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+          background-color: #d94d25;
+      }
+  }
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .producto {
+      flex-direction: column;
+      padding: 20px;
+  }
+
+  .producto-imagen, .producto-info {
+      width: 100%;
+      margin-left: 0;
+  }
+
+  .producto-info {
+      margin-top: 20px;
+  }
+}

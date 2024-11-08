@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../components/sass/Medicamentos.scss'; 
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate para redirección
 
 const Bebes = () => {
     const [productos, setProductos] = useState([]);
     const [categoria, setCategoria] = useState({ nombre_categoria: '', descripcion_categoria: '' });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const navigate = useNavigate(); // Define useNavigate
     const categoriaId = 4;
 
     useEffect(() => {
@@ -49,7 +50,11 @@ const Bebes = () => {
             <p>{categoria.descripcion_categoria}</p>
             <ul className="product-list">
                 {productos.map((producto) => (
-                    <li key={producto.id_producto} className="product-item">
+                    <li
+                        key={producto.id_producto}
+                        className="product-item"
+                        onClick={() => navigate(`/producto/${producto.id_producto}`)} // Redirige al producto específico
+                    >
                         <img
                             src={`/src/assets/productoimg/${cleanProductName(producto.nombre_producto)}.jpg`}
                             alt={producto.nombre_producto}
@@ -63,5 +68,6 @@ const Bebes = () => {
         </div>
     );
 };
+
 
 export default Bebes;

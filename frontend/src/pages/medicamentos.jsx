@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate para redirección
 import '../components/sass/Medicamentos.scss';  // Importamos el archivo de estilos Sass
 
 const Medicamentos = () => {
@@ -7,7 +8,7 @@ const Medicamentos = () => {
     const [categoria, setCategoria] = useState({ nombre_categoria: '', descripcion_categoria: '' });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const navigate = useNavigate(); // Define useNavigate
     const categoriaId = 1;
 
     useEffect(() => {
@@ -48,7 +49,11 @@ const Medicamentos = () => {
             <p>{categoria.descripcion_categoria}</p>
             <ul className="product-list">
                 {productos.map((producto) => (
-                    <li key={producto.id_producto} className="product-item">
+                    <li
+                        key={producto.id_producto}
+                        className="product-item"
+                        onClick={() => navigate(`/producto/${producto.id_producto}`)} // Redirige al producto específico
+                    >
                         <img
                             src={`/src/assets/productoimg/${cleanProductName(producto.nombre_producto)}.jpg`}
                             alt={producto.nombre_producto}

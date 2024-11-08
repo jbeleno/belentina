@@ -15,6 +15,7 @@ import Medicamentos from './pages/medicamentos.jsx';
 import Maquillaje from './pages/maquillaje.jsx';
 import Facial from './pages/facial.jsx';
 import Bebes from './pages/bebes.jsx';
+import Producto from './pages/producto.jsx';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -73,6 +74,7 @@ const App = () => {
         <Route path='/maquillaje' element={<Maquillaje/>}/>
         <Route path='/bebes' element={<Bebes/>}/>
         <Route path='/facial' element={<Facial/>}/>
+        <Route path="/producto/:id" element={<Producto />} /> {/* Ruta para mostrar el producto */}
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />

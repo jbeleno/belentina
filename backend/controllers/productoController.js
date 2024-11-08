@@ -65,13 +65,17 @@ export const obtenerProductoPorId = async (req, res) => {
         }
 
         // Convertir el precio de Decimal128 a string
-        producto.precio = producto.precio.toString();
+        const productoConPrecioString = {
+            ...producto.toObject(),
+            precio: producto.precio.toString() // Convertir a string para evitar formato $numberDecimal
+        };
 
-        res.status(200).json(producto);
+        res.status(200).json(productoConPrecioString);
     } catch (error) {
         res.status(500).json({ mensaje: "Error al obtener el producto", error: error.message });
     }
 };
+
 
 
 // Actualizar un producto
