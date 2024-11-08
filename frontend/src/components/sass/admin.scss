@@ -1,0 +1,116 @@
+/* Asegura que el body y html ocupen toda la altura de la ventana */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor principal que asegura que el contenido se centre */
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrado vertical */
+  align-items: center; /* Centrado horizontal */
+  min-height: 100vh; /* Garantiza que ocupe al menos la altura de la ventana */
+  height: 100%; /* Hace que ocupe todo el alto de la ventana */
+  background-color: #f4f4f4;
+  padding: 20px;
+  box-sizing: border-box; /* Evita que el padding afecte el tamaño total */
+}
+
+/* Estilo para los encabezados principales */
+h1, h2 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center; /* Asegura que los títulos se centren */
+}
+
+/* Estilo general para los párrafos */
+p {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+/* Estilo para los mensajes de error */
+.error {
+  color: #f44336;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+/* Contenedor del perfil con fondo blanco, sombras y bordes redondeados */
+.perfil-info {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px; /* Limita el tamaño máximo del contenedor */
+  text-align: left;
+  margin: 0 auto; /* Centrado horizontal */
+  display: flex;
+  align-items: center; /* Alinea el contenido del perfil verticalmente */
+  justify-content: space-between; /* Espacio entre la imagen y el texto */
+  flex-wrap: wrap; /* Permite que el contenido se ajuste en pantallas pequeñas */
+}
+
+/* Estilo para la sección del texto dentro de perfil-info */
+.perfil-text {
+  flex: 1;
+}
+
+/* Estilo para la imagen del perfil del admin */
+.admin-image {
+  width: 150px;
+  height: 150px;
+  margin-right: 100px;
+  object-fit: cover;
+  margin-left: 20px; /* Espacio entre la imagen y el contenido */
+  @media (max-width: 768px) {
+    width: 120px; /* Reducir tamaño en pantallas pequeñas */
+    height: 120px;
+  }
+}
+
+/* Estilo para el botón de cerrar sesión */
+.logout-button-admin {
+  background-color: #f44336; /* Rojo para el botón de cerrar sesión */
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Hace el botón del mismo tamaño que el contenedor en pantallas pequeñas */
+
+  &:hover {
+    background-color: #d32f2f; /* Rojo más oscuro al pasar el cursor */
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+/* Media query para mejorar la visualización en pantallas pequeñas */
+@media (max-width: 768px) {
+  .perfil-info {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .admin-image {
+    margin-left: 0; /* Elimina el margen en pantallas pequeñas */
+    margin-bottom: 15px; /* Agrega un margen inferior */
+  }
+
+  .logout-button-admin {
+    width: auto; /* El botón ocupa su tamaño por defecto en pantallas pequeñas */
+  }
+}

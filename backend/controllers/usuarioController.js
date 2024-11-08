@@ -3,7 +3,6 @@ import generarId from '../helpers/generarId.js';
 import generarJWT from '../helpers/generarJWT.js';
 
 const registrar = async (req, res) => {
-    // Evitar registros duplicados
     const { email, role } = req.body;
 
     const existeUsuario = await Usuario.findOne({ email });
@@ -49,25 +48,6 @@ const autenticar = async (req, res) => {
         return res.status(403).json({ msg: error.message });
     }
 };
-
-// Eliminar la función de confirmación, ya que ya no es necesaria
-// const confirmar = async (req, res) => {
-//     const { token } = req.params;
-//     const usuarioConfirmar = await Usuario.findOne({ token });
-//     if (!usuarioConfirmar) {
-//         const error = new Error("Token no Valido");
-//         return res.status(403).json({ msg: error.message });
-//     }
-
-//     try {
-//         usuarioConfirmar.confirmado = true;
-//         usuarioConfirmar.token = "";
-//         await usuarioConfirmar.save();
-//         res.json({ msg: 'Usuario Confirmado Correctamente' });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
 
 const olvidePassword = async (req, res) => {
     const { email } = req.body;
@@ -120,10 +100,54 @@ const nuevoPassword = async (req, res) => {
     }
 };
 
+// Función perfil ajustada para obtener datos según el correo registrado
 const perfil = async (req, res) => {
-    const { usuario } = req;
+    const { email } = req.usuario;  // Usamos el email del usuario autenticado
 
-    res.json(usuario);
+    // Buscamos al usuario con el email
+    const usuario = await Usuario.findOne({ email });
+
+    if (!usuario) {
+        const error = new Error("Usuario no encontrado");
+        return res.status(404).json({ msg: error.message });
+    }
+
+    // Devolvemos todos los datos del usuario encontrado
+    res.json(usuario);  // Devuelve todo el documento de usuario
 };
 
-export { registrar, autenticar, olvidePassword, comprobarToken, nuevoPassword, perfil };
+// Función para obtener el perfil de usuario con rol 'user'
+const obtenerPerfilUsuario = async (req, res) => {
+    const { email } = req.usuario;  // Usamos el email del usuario autenticado
+
+    try {
+        // Buscar al usuario por su email
+        const usuario = await Usuario.findOne({ email }).select("-password -token -createdAt -updatedAt -__v");
+
+        // Si no se encuentra el usuario
+        if (!usuario) {
+            const error = new Error("Usuario no encontrado");
+            return res.status(404).json({ msg: error.message });
+        }
+
+        // Verificamos que el rol sea 'user', ya que este endpoint es solo para usuarios comunes
+        if (usuario.role !== "user") {
+            return res.status(403).json({ msg: "Acceso denegado: Solo usuarios comunes" });
+        }
+
+        // Devolver la información del perfil del usuario
+        res.json({
+            nombre: usuario.nombre,
+            apellido_cliente: usuario.apellido_cliente,
+            email: usuario.email,
+            telefono_cliente: usuario.telefono_cliente,
+            direccion_cliente: usuario.direccion_cliente,
+            fecha_registro: usuario.fecha_registro,
+            role: usuario.role,
+        });
+    } catch (error) {
+        res.status(500).json({ msg: "Error en el servidor", error: error.message });
+    }
+};
+
+export { registrar, autenticar, olvidePassword, comprobarToken, nuevoPassword, perfil, obtenerPerfilUsuario };

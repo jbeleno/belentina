@@ -1,35 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../components/sass/admin.scss';
+import adminImage from '../assets/img/admin.png'; // Importa la imagen
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true); // Estado de carga inicial
-  const [isAuthorized, setIsAuthorized] = useState(false); // Estado para determinar si el usuario es autorizado
+  const [loading, setLoading] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [usuario, setUsuario] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
 
-    // Verificar si hay token y si el rol es 'admin'
     if (token && role === 'admin') {
-      setIsAuthorized(true); // Usuario es administrador
-      setLoading(false); // Deja de cargar porque la autorización es correcta
-    } else {
-      navigate('/home', { replace: true }); // Redirige solo si no está autorizado
-    }
-  }, [navigate]); // `navigate` en el array de dependencias garantiza que no se cicla
+      setIsAuthorized(true);
+      setLoading(false);
 
-  // Mostrar mensaje de carga mientras se verifica el estado de autorización
+      const fetchUserProfile = async () => {
+        try {
+          const response = await axios.get('http://localhost:5000/api/usuarios/perfil', {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            }
+          });
+          setUsuario(response.data);
+        } catch (err) {
+          console.error('Error al obtener el perfil del usuario', err);
+          setError('No se pudo obtener la información del perfil');
+        }
+      };
+
+      fetchUserProfile();
+    } else {
+      navigate('/home', { replace: true });
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    navigate('/login');
+  };
+
   if (loading) {
     return <div>Cargando...</div>;
   }
 
-  // Mostrar el contenido solo si el usuario está autorizado
   return (
     isAuthorized && (
       <div>
         <h1>Bienvenido al Panel de Administración</h1>
         <p>Solo los usuarios autenticados con rol de administrador pueden ver esta página.</p>
+
+        {error && <p className="error">{error}</p>}
+        {usuario ? (
+          <div className="perfil-info">
+            {/* Imagen a la derecha */}
+            <div className="perfil-text">
+              <h2>Perfil de Usuario</h2>
+              <p><strong>Nombre:</strong> {usuario.nombre} {usuario.apellido_cliente}</p>
+              <p><strong>Email:</strong> {usuario.email}</p>
+              <p><strong>Teléfono:</strong> {usuario.telefono_cliente}</p>
+              <p><strong>Dirección:</strong> {usuario.direccion_cliente}</p>
+              <p><strong>Fecha de Registro:</strong> {new Date(usuario.fecha_registro).toLocaleDateString()}</p>
+              <p><strong>Rol:</strong> {usuario.role}</p>
+              <div className="logout-button-container-admin">
+                <button onClick={handleLogout} className="logout-button-admin">Cerrar sesión</button>
+              </div>
+            </div>
+
+            <img src={adminImage} alt="Imagen de administrador" className="admin-image" />
+          </div>
+        ) : (
+          <p>Cargando perfil...</p>
+        )}
       </div>
     )
   );

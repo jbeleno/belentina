@@ -14,11 +14,19 @@ const Bebes = () => {
 
     useEffect(() => {
         const obtenerProductosYCategoria = async () => {
+            const token = localStorage.getItem('token'); // Obtén el token del localStorage
+
             try {
-                const productosResponse = await axios.get(`http://localhost:5000/api/productos/categoria/${categoriaId}`);
+                // Solicitud para obtener los productos de la categoría, incluyendo el token en las cabeceras
+                const productosResponse = await axios.get(`http://localhost:5000/api/productos/categoria/${categoriaId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
                 setProductos(productosResponse.data);
 
-                const categoriaResponse = await axios.get(`http://localhost:5000/api/categorias/${categoriaId}`);
+                // Solicitud para obtener los detalles de la categoría
+                const categoriaResponse = await axios.get(`http://localhost:5000/api/categorias/${categoriaId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
                 setCategoria({
                     nombre_categoria: categoriaResponse.data.nombre_categoria,
                     descripcion_categoria: categoriaResponse.data.descripcion_categoria,
@@ -68,6 +76,5 @@ const Bebes = () => {
         </div>
     );
 };
-
 
 export default Bebes;

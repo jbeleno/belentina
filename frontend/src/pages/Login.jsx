@@ -20,7 +20,7 @@ const Login = () => {
       if (role === 'admin') {
         navigate('/admin', { replace: true }); // Redirigir al panel de administración
       } else if (role === 'user') {
-        navigate('/home', { replace: true }); // Redirigir al home
+        navigate('/cuenta', { replace: true }); // Redirigir al home
       }
     }
   }, []); // Mantener arreglo vacío asegura que se ejecute solo al montar el componente
@@ -49,7 +49,7 @@ const Login = () => {
         if (role === 'admin') {
           navigate('/admin', { replace: true }); // Redirigir al panel de administración
         } else if (role === 'user') {
-          navigate('/home', { replace: true }); // Redirigir al home
+          navigate('/cuenta', { replace: true }); // Redirigir al home
         } else {
           setError('Rol de usuario no reconocido');
         }
