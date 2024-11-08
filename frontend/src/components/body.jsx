@@ -1,4 +1,6 @@
+// Body.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate para redirección
 import axios from 'axios';
 import './sass/body.scss';
 
@@ -6,6 +8,7 @@ const Body = () => {
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Inicializa useNavigate
 
     useEffect(() => {
         const obtenerProductos = async () => {
@@ -41,7 +44,11 @@ const Body = () => {
             <h1>Productos Recomendados</h1>
             <div className="center-group">
                 {productos.map((producto) => (
-                    <div key={producto.id_producto} className="center">
+                    <div
+                        key={producto.id_producto}
+                        className="center"
+                        onClick={() => navigate(`/producto/${producto.id_producto}`)} // Redirige al producto específico
+                    >
                         <div className="fila1">
                             <img
                                 src={`/src/assets/productoimg/${cleanProductName(producto.nombre_producto)}.jpg`}

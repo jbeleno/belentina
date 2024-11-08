@@ -1,82 +1,72 @@
-import React, { useState } from 'react';
+// Cart.jsx
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../components/sass/Cart.scss';
-import Aceta from '../assets/img/Aceta.png';
-import Advil from '../assets/img/advil.png';
-import Clarito from '../assets/img/Clarito.png';
 
 const Cart = () => {
-  const initialCartItems = [
-    {
-      image: Aceta,
-      name: 'ACETAMINOFEN 500 MG',
-      quantity: 1,
-      price: 2000
-    },
-    {
-      image: Advil,
-      name: 'ADVIL MAX 10 CAPSULAS',
-      quantity: 1,
-      price: 20000
-    },
-    {
-      image: Clarito,
-      name: 'CLARITROMICINA 500 MG',
-      quantity: 1,
-      price: 36400
-    }
-  ];
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  // Función para mezclar el arreglo de productos
+  const mezclarArray = (array) => array.sort(() => Math.random() - 0.5);
 
-  const handleQuantityChange = (index, delta) => {
-    const newCartItems = [...cartItems];
-    newCartItems[index].quantity = Math.max(1, newCartItems[index].quantity + delta);
-    setCartItems(newCartItems);
-  };
+  useEffect(() => {
+    const obtenerProductos = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/productos');
+        const productosAleatorios = mezclarArray(response.data).slice(0, 3); // Selecciona 3 productos
+        setCartItems(productosAleatorios);
+        setLoading(false);
+      } catch (error) {
+        setError('Error al cargar los productos');
+        setLoading(false);
+      }
+    };
 
-  const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    obtenerProductos();
+  }, []);
 
-  const CartItem = ({ item, index }) => (
-    <div className="cart-item">
-      <img src={item.image} alt={item.name} />
-      <div className="item-details">
-        <h3>{item.name}</h3>
-        <div className="item-controls">
-          <button className="item-button" onClick={() => handleQuantityChange(index, 1)}>+</button>
-          <span className="item-quantity">{item.quantity}</span>
-          <button className="item-button" onClick={() => handleQuantityChange(index, -1)}>-</button>
-        </div>
-        <div className="item-price">{item.price} $</div>
-        <div className="item-actions">
-          <button>Eliminar</button>
-          <button>Guardar</button>
-        </div>
-      </div>
-    </div>
-  );
+  const cleanProductName = (name) => name.replace(/\s+/g, '_');
+
+  // Calcular el total del carrito, convirtiendo el precio a número
+  const total = cartItems.reduce((acc, item) => {
+    const precio = parseFloat(item.precio.replace('$', '').replace(',', '')); // Elimina el signo '$' y convierte el valor a número
+    return acc + precio;
+  }, 0);
+
+  if (loading) return <p>Cargando productos del carrito...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
-    <div className="cart-container">
+    <div className="cart">
+      <h1>Carrito de Compras</h1>
       <div className="cart-items">
-        {cartItems.map((item, index) => (
-          <CartItem key={index} item={item} index={index} />
+        {cartItems.map((producto) => (
+          <div
+            key={producto.id_producto}
+            className="cart-item"
+            onClick={() => navigate(`/producto/${producto.id_producto}`)}
+          >
+            <img
+              src={`/src/assets/productoimg/${cleanProductName(producto.nombre_producto)}.jpg`}
+              alt={producto.nombre_producto}
+              onError={(e) => (e.target.src = '/src/assets/img/default.jpg')}
+              className="imagen"
+            />
+            <div className="item-details">
+              <h2>{producto.nombre_producto}</h2>
+              <p className="price">Precio: ${producto.precio}</p>
+            </div>
+          </div>
         ))}
       </div>
       <div className="cart-summary">
-        <h2>RESUMEN DE LA COMPRA</h2>
-        <div className="summary-details">
-          <p className="label">PRODUCTOS ({cartItems.length})</p>
-          <p className="value">{total} $</p>
-        </div>
-        <div className="summary-details">
-          <p className="label">ENVIOS</p>
-          <p className="value">GRATIS</p>
-        </div>
-        <div className="summary-details total">
-          <p className="label">TOTAL</p>
-          <p className="value">{total} $</p>
-        </div>
-        <button className="checkout-button">Comprar</button>
+        <h2>Total del Carrito</h2>
+        <p className="total-price">Total: ${total.toFixed(2)}</p>
+        <button className="checkout-button">Proceder al Pago</button>
       </div>
     </div>
   );
