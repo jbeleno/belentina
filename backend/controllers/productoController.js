@@ -13,6 +13,12 @@ export const crearProducto = async (req, res) => {
             return res.status(400).json({ mensaje: "Categoría no válida. Solo se permiten las categorías: 1, 2, 3, 4." });
         }
 
+        // Validación de nombre único
+        const productoExistente = await Producto.findOne({ nombre_producto });
+        if (productoExistente) {
+            return res.status(400).json({ mensaje: `El nombre de producto "${nombre_producto}" ya está en uso. Elige otro nombre.` });
+        }
+
         const nuevoProducto = new Producto({
             id_producto,
             nombre_producto,
@@ -68,6 +74,15 @@ export const actualizarProducto = async (req, res) => {
             return res.status(400).json({ mensaje: "Categoría no válida. Solo se permiten las categorías: 1, 2, 3, 4." });
         }
 
+        // Validación de nombre único (exceptuando el producto actual)
+        const productoExistente = await Producto.findOne({ 
+            nombre_producto, 
+            _id: { $ne: id }  // Excluye el producto actual de la búsqueda
+        });
+        if (productoExistente) {
+            return res.status(400).json({ mensaje: `El nombre de producto "${nombre_producto}" ya está en uso. Elige otro nombre.` });
+        }
+
         const productoActualizado = await Producto.findOneAndUpdate(
             { id_producto: id },
             { nombre_producto, descripcion, precio, cantidad_disponible, fecha_vencimiento, categoria },
@@ -101,6 +116,7 @@ export const eliminarProducto = async (req, res) => {
         res.status(500).json({ mensaje: "Error al eliminar el producto", error: error.message });
     }
 };
+
 // Controlador para obtener productos por categoría
 export const obtenerProductosPorCategoria = async (req, res) => {
     try {

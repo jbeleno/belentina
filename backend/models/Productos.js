@@ -31,10 +31,6 @@ const productoSchema = new mongoose.Schema({
     fecha_vencimiento: {
         type: Date,
     },
-    imagen: {
-        type: String, // Aquí se almacenará el código Base64 de la imagen
-        trim: true,
-    },
     categoria: {
         type: Number, // Ahora 'categoria' es un número (id_categoria)
         required: true, // Es posible agregar la validación para asegurarse de que siempre se asigna una categoría válida
