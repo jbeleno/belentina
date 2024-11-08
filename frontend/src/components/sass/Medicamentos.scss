@@ -1,0 +1,64 @@
+/* Medicamentos.scss */
+
+.med-container {
+    margin: 20px;
+    text-align: center;
+}
+
+.med-container h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.med-container p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* 3 productos por fila */
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.product-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.product-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-item img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.product-item h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+/* Aseguramos que la descripción del producto sea de color negro */
+.product-item p {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #000; /* Color negro */
+}
+
+.product-item .price {
+    font-weight: bold;
+    color: #28a745;
+    font-size: 1.2rem;
+}
