@@ -30,7 +30,6 @@ const Body = () => {
     const mezclarArray = (array) => array.sort(() => Math.random() - 0.5);
 
     const cleanProductName = (name) => name.replace(/\s+/g, '_');
-
     if (loading) {
         return <p>Cargando productos...</p>;
     }
