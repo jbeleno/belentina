@@ -1,106 +1,60 @@
-import React from 'react';
-import './sass/body.scss'; // Importa los estilos del scss del body  
-import imagen1 from '../assets/img/imagen1.jpg';
-import Aceta from "../assets/img/Aceta.png";    
-import imagen2 from '../assets/img/imagen2.jpg';
-import advil from "../assets/img/advil.png";
-import loratadina from "../assets/img/loratadina.png";
-import ibuprofeno from "../assets/img/ibuprofeno.png";
-import naproxeno from "../assets/img/naproxeno.png";
-import loperamida from "../assets/img/loperamida.png";
-import acnestil from "../assets/img/acnestil.png";
-import serumhidratante from "../assets/img/serum.png";
-import pañales from "../assets/img/pañales.png";
-import tetero from "../assets/img/tetero.png";
-
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './sass/body.scss';
 
 const Body = () => {
+    const [productos, setProductos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const obtenerProductos = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/productos');
+                const productosAleatorios = mezclarArray(response.data).slice(0, 8); // Mezcla y selecciona 8 productos
+                setProductos(productosAleatorios);
+                setLoading(false);
+            } catch (error) {
+                setError('Error al cargar los productos');
+                setLoading(false);
+            }
+        };
+
+        obtenerProductos();
+    }, []);
+
+    // Función para mezclar un array
+    const mezclarArray = (array) => array.sort(() => Math.random() - 0.5);
+
+    const cleanProductName = (name) => name.replace(/\s+/g, '_');
+
+    if (loading) {
+        return <p>Cargando productos...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
     return (
         <div className="body">
+            <h1>Productos Recomendados</h1>
             <div className="center-group">
-                <div className="center">
-                    <div className="fila1">
-                        <img src={Aceta} alt="imagen del body 1" className="imagen" />
-                        <h1>Acetaminofen</h1>
-                        <p>Disponible</p>
-                        <p>$2.000</p>
+                {productos.map((producto) => (
+                    <div key={producto.id_producto} className="center">
+                        <div className="fila1">
+                            <img
+                                src={`/src/assets/productoimg/${cleanProductName(producto.nombre_producto)}.jpg`}
+                                alt={producto.nombre_producto}
+                                onError={(e) => (e.target.src = '/src/assets/img/default.jpg')} // Imagen de respaldo
+                                className="imagen"
+                            />
+                            <h1>{producto.nombre_producto}</h1>
+                            <p>{producto.descripcion}</p>
+                            <p className="price">Precio: ${producto.precio}</p>
+                        </div>
                     </div>
-                </div>
-                <div className="center">
-                    <div className="fila1">
-                        <img src={advil} alt="imagen del body 1" className="imagen" />
-                        <h1>Advil</h1>
-                        <p>Disponible</p>
-                        <p>$8.000</p>
-                    </div>
-                </div>
-                <div className="center">
-                    <div className="fila1">
-                        <img src={loratadina} alt="imagen del body 1" className="imagen" />
-                        <h1>Loratadina</h1>
-                        <p>Disponible</p>
-                        <p>$3.500</p>
-                    </div>
-                </div>
-                <div className="center">
-                    <div className="fila1">
-                        <img src={ibuprofeno} alt="imagen del body 1" className="imagen" />
-                        <h1>Ibuprofeno</h1>
-                        <p>Disponible</p>
-                        <p>$4.300</p>
-                    </div>
-                </div>
-                <div className="center">
-                    <div className="fila1">
-                        <img src={naproxeno} alt="imagen del body 1" className="imagen" />
-                        <h1>Naproxeno</h1>
-                        <p>Disponible</p>
-                        <p>$3.900</p>
-                    </div>
-                </div>
-            </div>
-            <div className="center-group">
-                <div className="center">
-                    <div className="fila1">
-                        <img src={loperamida} alt="imagen del body 2" className="imagen" />
-                        <h1>Loperamida</h1>
-                        <p>Disponible</p>
-                        <p>$8.600</p>
-                    </div>
-                </div>
-                <div className="center">
-                    <div className="fila1">
-                        <img src={acnestil} alt="imagen del body 2" className="imagen" />
-                        <h1>Acnestil</h1>
-                        <p>Disponible</p>
-                        <p>$55.700</p>
-                    </div>
-                </div>
-                <div className="center">
-                    <div className="fila1">
-                        <img src={serumhidratante} alt="imagen del body 2" className="imagen" />
-                        <h1>Sérum hidratante</h1>
-                        <p>Disponible</p>
-                        <p>$53.700</p>
-                    </div>
-                </div>
-                <div className="center">
-                    <div className="fila1">
-                        <img src={pañales} alt="imagen del body 2" className="imagen" />
-                        <h1>Pañales</h1>
-                        <p>Disponible</p>
-                        <p>$34.000</p>
-                    </div>
-                </div>
-                <div className="center">
-                    <div className="fila1">
-                        <img src={tetero} alt="imagen del body 2" className="imagen" />
-                        <h1>Tetero</h1>
-                        <p>Disponible</p>
-                        <p>$32.500</p>
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     );

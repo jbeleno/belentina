@@ -41,7 +41,14 @@ export const crearProducto = async (req, res) => {
 export const obtenerProductos = async (req, res) => {
     try {
         const productos = await Producto.find();
-        res.status(200).json(productos);
+
+        // Convertir el precio de Decimal128 a string
+        const productosConPrecioString = productos.map((producto) => ({
+            ...producto.toObject(),
+            precio: producto.precio.toString(), // Convertir a string para evitar formato $numberDecimal
+        }));
+
+        res.status(200).json(productosConPrecioString);
     } catch (error) {
         res.status(500).json({ mensaje: "Error al obtener los productos", error: error.message });
     }
@@ -57,11 +64,15 @@ export const obtenerProductoPorId = async (req, res) => {
             return res.status(404).json({ mensaje: "Producto no encontrado" });
         }
 
+        // Convertir el precio de Decimal128 a string
+        producto.precio = producto.precio.toString();
+
         res.status(200).json(producto);
     } catch (error) {
         res.status(500).json({ mensaje: "Error al obtener el producto", error: error.message });
     }
 };
+
 
 // Actualizar un producto
 export const actualizarProducto = async (req, res) => {
