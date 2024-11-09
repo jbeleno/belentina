@@ -15,6 +15,13 @@ const Login = () => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
 
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('token');
+      const role = localStorage.getItem('role');
+  } else {
+      console.error('localStorage no está disponible.');
+  }
+  
     // Redirigir solo si el token y el rol existen y la redirección aún no ha ocurrido
     if (token && role) {
       if (role === 'admin') {

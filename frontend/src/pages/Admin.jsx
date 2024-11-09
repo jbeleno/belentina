@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../components/sass/admin.scss';
-import adminImage from '../assets/img/admin.png'; // Importa la imagen
+import adminImage from '../assets/img/admin.png'; // Imagen de perfil de administrador
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const Admin = () => {
         {error && <p className="error">{error}</p>}
         {usuario ? (
           <div className="perfil-info">
-            {/* Imagen a la derecha */}
+            {/* Imagen de perfil a la derecha */}
             <div className="perfil-text">
               <h2>Perfil de Usuario</h2>
               <p><strong>Nombre:</strong> {usuario.nombre} {usuario.apellido_cliente}</p>
@@ -83,3 +83,4 @@ const Admin = () => {
 };
 
 export default Admin;
+
