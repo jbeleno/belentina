@@ -19,7 +19,6 @@ import Cuenta from './pages/Cuenta.jsx';
 
 const App = () => {
   
-
   return (
     <div className="app-container">
       <Header />
