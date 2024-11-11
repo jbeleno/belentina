@@ -54,7 +54,9 @@ const Admin = () => {
       <div>
         <h1>Bienvenido al Panel de Administración</h1>
         <p style={{ textAlign: 'center' }}>Solo los usuarios autenticados con rol de administrador pueden ver esta página.</p> 
-
+        <p>
+        <br />
+        </p>
 
         {error && <p className="error">{error}</p>}
         {usuario ? (
@@ -69,7 +71,7 @@ const Admin = () => {
               <p><strong>Fecha de Registro:</strong> {new Date(usuario.fecha_registro).toLocaleDateString()}</p>
               <p><strong>Rol:</strong> {usuario.role}</p>
               <div className="logout-button-container-admin">
-                <button onClick={handleLogout} className="logout-button-admin"> sesión</button>
+                <button onClick={handleLogout} className="logout-button-admin"> Cerrar sesión</button>
               </div>
             </div>
 
@@ -78,7 +80,9 @@ const Admin = () => {
         ) : (
           <p>Cargando perfil...</p>
         )}
-
+<p>
+        <br />
+        </p>
       
       </div>
     )
