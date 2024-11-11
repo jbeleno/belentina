@@ -1,3 +1,10 @@
+/* Definición de variables SCSS */
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$background-color: #f4f4f4;
+$text-color: #333;
+$hover-color: #2980b9;
+
 /* Asegura que el body y html ocupen toda la altura de la ventana */
 html, body {
   height: 100%;
@@ -98,19 +105,178 @@ p {
   }
 }
 
-/* Media query para mejorar la visualización en pantallas pequeñas */
-@media (max-width: 768px) {
-  .perfil-info {
-    flex-direction: column;
+/* Contenedor principal de productos recomendados */
+.productosRecomendados {
+  padding: 20px;
+  margin: 20px auto; /* Centrado horizontal con auto en los márgenes izquierdo y derecho */
+  margin-top: 20px;
+  margin-bottom: 20px; /* Añadir espacio al fondo */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px; /* Asegura que no ocupe más de 800px */
+
+  h1 {
+    font-size: 2rem;
+    color: $primary-color;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* Contenedor para las tarjetas de los productos */
+  .center-group {
+    display: flex;
+    flex-direction: column; /* Los productos se apilan verticalmente */
+    gap: 20px; /* Espacio entre productos */
+    justify-items: center;
+  }
+
+  /* Estilo de cada tarjeta de producto */
+  .center {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between; /* Espacio entre la imagen y los botones */
     align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Imagen del producto */
+    .fila1 {
+      position: relative;
+      overflow: hidden;
+      width: 100px;
+      height: 100px;
+
+      .imagen {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(1.1); /* Imagen en hover */
+        }
+      }
+    }
+
+    /* Contenedor para el texto del producto */
+    .product-info {
+      flex: 1;
+      margin-left: 20px;
+      
+      h1 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: 15px;
+        color: $primary-color;
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: $text-color;
+        text-align: left;
+      }
+
+      .price {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: $secondary-color;
+        margin-top: 10px;
+      }
+    }
+
+    /* Contenedor para los botones */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      
+      button {
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin: 5px 0;
+        cursor: pointer;
+        font-size: 1rem;
+        
+        &:hover {
+          background-color: $hover-color;
+        }
+        
+        &.delete {
+          background-color: #f44336; /* Rojo para el botón de eliminar */
+          
+          &:hover {
+            background-color: #d32f2f; /* Rojo más oscuro */
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .productosRecomendados {
+    padding: 10px;
   }
 
-  .admin-image {
-    margin-left: 0; /* Elimina el margen en pantallas pequeñas */
-    margin-bottom: 15px; /* Agrega un margen inferior */
+  .center-group {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .center-group {
+    grid-template-columns: 1fr;
   }
 
-  .logout-button-admin {
-    width: auto; /* El botón ocupa su tamaño por defecto en pantallas pequeñas */
+  .productosRecomendados h1 {
+    font-size: 1.5rem;
+  }
+}
+/* Contenedor para los botones Añadir y Eliminar */
+.center .buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin-left: 20px;
+}
+
+/* Estilos para los botones */
+.add-button, .delete-button {
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 5px 0;
+  cursor: pointer;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: $hover-color;
+  }
+}
+
+.delete-button {
+  background-color: #f44336; /* Rojo para el botón de eliminar */
+  
+  &:hover {
+    background-color: #d32f2f; /* Rojo más oscuro */
   }
 }
