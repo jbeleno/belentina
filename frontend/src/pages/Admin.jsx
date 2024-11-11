@@ -53,7 +53,11 @@ const Admin = () => {
     isAuthorized && (
       <div>
         <h1>Bienvenido al Panel de Administración</h1>
-        <p>Solo los usuarios autenticados con rol de administrador pueden ver esta página.</p>
+        <p style={{ textAlign: 'center' }}>Solo los usuarios autenticados con rol de administrador pueden ver esta página.</p> 
+       
+        <p>
+          <br />
+        </p>
 
         {error && <p className="error">{error}</p>}
         {usuario ? (
@@ -77,6 +81,10 @@ const Admin = () => {
         ) : (
           <p>Cargando perfil...</p>
         )}
+
+          <p>
+          <br />
+          </p>
       </div>
     )
   );
