@@ -173,7 +173,9 @@ const ProductosRecomendados = () => {
                 onError={(e) => (e.target.src = '/src/assets/img/default.jpg')}
                 className="imagen"
               />
-              <h1>{producto.nombre_producto}</h1>
+            </div>
+            <div>
+            <h1>{producto.nombre_producto}</h1>
               <p>Descripción: {producto.descripcion}</p>
               <p>Descripción larga: {producto.descripcion_larga}</p>
               <p>Precio: ${producto.precio.toString()}</p>
