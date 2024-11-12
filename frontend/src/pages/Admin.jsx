@@ -84,88 +84,232 @@ const Admin = () => {
 <p>
         <br />
         </p>
-      
       </div>
     )
   );
 };
-/*ACA EMPIEZAN LOS PRODUCTOS Y TERMINA LA VISTA DE USUARIO*/
+
+
 const ProductosRecomendados = () => {
+  const navigate = useNavigate();
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [editingProduct, setEditingProduct] = useState(null);
 
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/productos');
-        setProductos(response.data); // Aquí no se limita la cantidad de productos
+        setProductos(response.data);
         setLoading(false);
       } catch (error) {
         setError('Error al cargar los productos');
         setLoading(false);
       }
     };
-
     obtenerProductos();
-  }, []); // Solo se ejecuta una vez cuando se monta el componente
+  }, []);
 
-  const cleanProductName = (name) => name.replace(/\s+/g, '_'); // Limpiar el nombre del producto para la URL
-
-  const handleAddProduct = (id) => {
-    // Lógica para añadir producto (ej. añadir al carrito o base de datos)
-    console.log(`Producto con id ${id} añadido.`);
+  const handleAddProduct = async (product) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/productos', product);
+      setProductos([...productos, response.data]);
+      alert('Producto agregado exitosamente');
+    } catch (error) {
+      console.error("Error al agregar el producto:", error);
+      alert("No se pudo agregar el producto");
+    }
   };
 
-  const handleDeleteProduct = (id) => {
-    // Lógica para eliminar el producto (puede ser eliminarlo de una lista o base de datos)
-    console.log(`Producto con id ${id} eliminado.`);
+  const handleEditProduct = (producto) => {
+    setEditingProduct(producto);
   };
 
-  if (loading) {
-    return <p>Cargando productos...</p>;
-  }
+  const handleUpdateProduct = async (product) => {
+    try {
+      const response = await axios.put(`http://localhost:5000/api/productos/${product.id_producto}`, product);
+      setProductos(productos.map((p) => (p.id_producto === product.id_producto ? response.data : p)));
+      setEditingProduct(null);
+      alert("Producto actualizado exitosamente");
+    } catch (error) {
+      console.error("Error al actualizar el producto:", error);
+      alert("No se pudo actualizar el producto");
+    }
+  };
 
-  if (error) {
-    return <p>{error}</p>;
-  }
+  const handleDeleteProduct = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/productos/${id}`);
+      setProductos(productos.filter((p) => p.id_producto !== id));
+      alert("Producto eliminado exitosamente");
+    } catch (error) {
+      console.error("Error al eliminar el producto:", error);
+      alert("No se pudo eliminar el producto");
+    }
+  };
+
+  if (loading) return <p>Cargando productos...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="productosRecomendados">
       <h1>Todos los productos</h1>
+      <ProductForm
+        onAddProduct={handleAddProduct}
+        onUpdateProduct={handleUpdateProduct}
+        editingProduct={editingProduct}
+        onClearForm={() => setEditingProduct(null)}
+      />
       <div className="center-group">
         {productos.map((producto) => (
-          <div
-            key={producto.id_producto}
-            className="center"
-            onClick={() => navigate(`/producto/${producto.id_producto}`)} // Redirige al producto específico
-          >
+          <div key={producto.id_producto} className="center"
+            > 
             <div className="fila1">
               <img
-                src={`/src/assets/productoimg/${cleanProductName(producto.nombre_producto)}.jpg`}
+                src={`/src/assets/productoimg/${producto.nombre_producto.replace(/\s+/g, '_')}.jpg`}
+                onClick={() => navigate(`/producto/${producto.id_producto}`)}// Redirige al producto específico
                 alt={producto.nombre_producto}
-                onError={(e) => (e.target.src = '/src/assets/img/default.jpg')} // Imagen de respaldo
+                onError={(e) => (e.target.src = '/src/assets/img/default.jpg')}
                 className="imagen"
               />
               <h1>{producto.nombre_producto}</h1>
-              <p>{producto.descripcion}</p>
-              <p className="price">Precio: ${producto.precio}</p>
+              <p>Descripción: {producto.descripcion}</p>
+              <p>Descripción larga: {producto.descripcion_larga}</p>
+              <p>Precio: ${producto.precio.toString()}</p>
+              <p>Cantidad disponible: {producto.cantidad_disponible}</p>
+              <p>Fecha de vencimiento: {producto.fecha_vencimiento ? new Date(producto.fecha_vencimiento).toLocaleDateString() : 'N/A'}</p>
+              <p>Categoría ID: {producto.categoria}</p>
             </div>
-
             <div className="buttons">
-              <button className="add-button" onClick={() => handleAddProduct(producto.id_producto)}>
-                Añadir
-              </button>
-              <button className="delete-button" onClick={() => handleDeleteProduct(producto.id_producto)}>
-                Eliminar
-              </button>
+              <button onClick={() => handleEditProduct(producto)}>Editar</button>
+              <button onClick={() => handleDeleteProduct(producto.id_producto)}>Eliminar</button>
             </div>
           </div>
         ))}
       </div>
     </div>
   );
+};
+
+const ProductForm = ({ onAddProduct, onUpdateProduct, editingProduct, onClearForm }) => {
+  const [nombre, setNombre] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [descripcionLarga, setDescripcionLarga] = useState('');
+  const [precio, setPrecio] = useState('');
+  const [cantidad, setCantidad] = useState('');
+  const [fechaVencimiento, setFechaVencimiento] = useState('');
+  const [categoria, setCategoria] = useState('');
+
+  useEffect(() => {
+    if (editingProduct) {
+      setNombre(editingProduct.nombre_producto);
+      setDescripcion(editingProduct.descripcion);
+      setDescripcionLarga(editingProduct.descripcion_larga);
+      setPrecio(editingProduct.precio.toString());
+      setCantidad(editingProduct.cantidad_disponible);
+      setFechaVencimiento(editingProduct.fecha_vencimiento ? new Date(editingProduct.fecha_vencimiento).toISOString().substr(0, 10) : '');
+      setCategoria(editingProduct.categoria);
+    } else {
+      clearForm();
+    }
+  }, [editingProduct]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const product = {
+      nombre_producto: nombre,
+      descripcion,
+      descripcion_larga: descripcionLarga,
+      precio,
+      cantidad_disponible: cantidad,
+      fecha_vencimiento: fechaVencimiento || null,
+      categoria,
+    };
+
+    if (editingProduct) {
+      onUpdateProduct({ ...editingProduct, ...product });
+    } else {
+      onAddProduct(product);
+    }
+    clearForm();
+  };
+
+  const clearForm = () => {
+    setNombre('');
+    setDescripcion('');
+    setDescripcionLarga('');
+    setPrecio('');
+    setCantidad('');
+    setFechaVencimiento('');
+    setCategoria('');
+    onClearForm();
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>{editingProduct ? 'Editar Producto' : 'Agregar Producto'}</h2>
+      <input
+        type="text"
+        value={nombre}
+        onChange={(e) => setNombre(e.target.value)}
+        placeholder="Nombre del Producto"
+        required
+      />
+      <input
+        type="text"
+        value={descripcion}
+        onChange={(e) => setDescripcion(e.target.value)}
+        placeholder="Descripción"
+        required
+      />
+      <textarea
+        value={descripcionLarga}
+        onChange={(e) => setDescripcionLarga(e.target.value)}
+        placeholder="Descripción Larga"
+      />
+      <input
+        type="number"
+        value={precio}
+        onChange={(e) => {
+          const value = e.target.value;
+          if (/^\d+(\.\d{0,2})?$/.test(value)) { // Solo permite números y hasta dos decimales
+            setPrecio(value);
+          }
+        }}
+        placeholder="Precio"
+        required
+      />
+      <input
+        type="number"
+        value={cantidad}
+        onChange={(e) => {
+          const value = e.target.value;
+          if (/^\d+$/.test(value)) { // Solo permite números enteros
+            setCantidad(value);
+          }
+        }}
+        placeholder="Cantidad Disponible"
+        required
+      />
+      <input
+        type="date"
+        value={fechaVencimiento}
+        onChange={(e) => setFechaVencimiento(e.target.value)}
+        placeholder="Fecha de Vencimiento"
+      />
+      <input
+        type="number"
+        value={categoria}
+        onChange={(e) => setCategoria(e.target.value)}
+        placeholder="Categoría ID"
+        required
+      />
+      <button type="submit">{editingProduct ? 'Actualizar' : 'Agregar'}</button>
+      <button type="button" onClick={clearForm}>Limpiar</button>
+    </form>
+  );
+  
 };
 
 export default Admin;
