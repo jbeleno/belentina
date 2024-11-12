@@ -78,41 +78,62 @@ export const obtenerProductoPorId = async (req, res) => {
 
 
 
-// Actualizar un producto
 export const actualizarProducto = async (req, res) => {
     try {
         const { id } = req.params;
         const { nombre_producto, descripcion, precio, cantidad_disponible, fecha_vencimiento, categoria } = req.body;
 
-        // Validación de la categoría
-        if (!categoriasPermitidas.includes(categoria)) {
-            return res.status(400).json({ mensaje: "Categoría no válida. Solo se permiten las categorías: 1, 2, 3, 4." });
+        // Creamos un objeto vacío donde solo se añadirán los campos que han sido enviados
+        const productoActualizado = {};
+
+        // Validación de la categoría si se envía
+        if (categoria) {
+            if (!categoriasPermitidas.includes(categoria)) {
+                return res.status(400).json({ mensaje: "Categoría no válida. Solo se permiten las categorías: 1, 2, 3, 4." });
+            }
+            productoActualizado.categoria = categoria; // Solo se añade si es enviado
         }
 
         // Validación de nombre único (exceptuando el producto actual)
-        const productoExistente = await Producto.findOne({ 
-            nombre_producto, 
-            _id: { $ne: id }  // Excluye el producto actual de la búsqueda
-        });
-        if (productoExistente) {
-            return res.status(400).json({ mensaje: `El nombre de producto "${nombre_producto}" ya está en uso. Elige otro nombre.` });
+        if (nombre_producto) {
+            const productoExistente = await Producto.findOne({ 
+                nombre_producto, 
+                _id: { $ne: id }  // Excluye el producto actual de la búsqueda
+            });
+            if (productoExistente) {
+                return res.status(400).json({ mensaje: `El nombre de producto "${nombre_producto}" ya está en uso. Elige otro nombre.` });
+            }
+            productoActualizado.nombre_producto = nombre_producto; // Solo se añade si es enviado
         }
 
-        const productoActualizado = await Producto.findOneAndUpdate(
+        // Si los demás campos son enviados, los añadimos al objeto
+        if (descripcion) productoActualizado.descripcion = descripcion;
+        if (precio) productoActualizado.precio = precio;
+        if (cantidad_disponible) productoActualizado.cantidad_disponible = cantidad_disponible;
+        if (fecha_vencimiento) productoActualizado.fecha_vencimiento = fecha_vencimiento;
+
+        // Si no hay campos para actualizar, se responde con un mensaje de error
+        if (Object.keys(productoActualizado).length === 0) {
+            return res.status(400).json({ mensaje: "No se proporcionaron cambios para actualizar." });
+        }
+
+        // Realizamos la actualización del producto con solo los campos enviados
+        const productoActualizadoBD = await Producto.findOneAndUpdate(
             { id_producto: id },
-            { nombre_producto, descripcion, precio, cantidad_disponible, fecha_vencimiento, categoria },
+            productoActualizado,  // Solo enviamos los campos modificados
             { new: true } // Para devolver el documento actualizado
         );
 
-        if (!productoActualizado) {
+        if (!productoActualizadoBD) {
             return res.status(404).json({ mensaje: "Producto no encontrado" });
         }
 
-        res.status(200).json({ mensaje: "Producto actualizado exitosamente", productoActualizado });
+        res.status(200).json({ mensaje: "Producto actualizado exitosamente", productoActualizado: productoActualizadoBD });
     } catch (error) {
         res.status(500).json({ mensaje: "Error al actualizar el producto", error: error.message });
     }
 };
+
 
 // Eliminar un producto
 export const eliminarProducto = async (req, res) => {

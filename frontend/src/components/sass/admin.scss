@@ -288,3 +288,224 @@ p {
     background-color: #d32f2f; /* Rojo más oscuro */
   }
 }
+
+/* Estilos generales para el formulario */
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.form-input {
+  width: 90%; /* Ocupa menos que el 100% del ancho para darle espacio a los lados */
+  max-width: 350px; /* Limita el ancho máximo */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.form-input:focus {
+  border-color: #4A90E2;
+  outline: none;
+}
+
+.form-buttons {
+  width: 100%; /* Ocupa el 100% del contenedor para que los botones se alineen bien */
+  display: flex;
+  justify-content: space-between;
+  max-width: 350px; /* Centra los botones */
+}
+
+.form-button {
+  width: 48%;
+  padding: 10px;
+  font-size: 1em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.add-button {
+  background-color: #4CAF50; /* Verde para el botón Agregar */
+}
+
+.update-button {
+  background-color: #2196F3; /* Azul para el botón Actualizar */
+}
+
+.clear-button {
+  background-color: #f44336; /* Rojo para el botón Limpiar */
+}
+
+.form-button:hover {
+  opacity: 0.9;
+}
+
+// Contenedor principal
+.producto-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+// Título principal
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+// Título del formulario
+h2 {
+  font-size: 1.5rem;
+  color: #444;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+// Formulario de producto
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border 0.3s ease;
+
+    &:focus {
+      border: 1px solid #007bff;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #888;
+    }
+
+    &:disabled {
+      background-color: #f9f9f9;
+      cursor: not-allowed;
+    }
+  }
+
+  button {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
+
+// Error de validación
+.error {
+  color: red;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+// Lista de productos
+ul {
+  list-style-type: none;
+  padding: 0;
+
+  li {
+    background-color: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+    p {
+      margin: 5px 0;
+      color: #333;
+    }
+
+    button {
+      padding: 8px 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      margin-right: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+
+    button:last-child {
+      background-color: #dc3545;
+      &:hover {
+        background-color: #c82333;
+      }
+    }
+  }
+}
+
+// Estilos para dispositivos móviles
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+}
+.exito {
+  color: green;
+  font-weight: bold;
+  background-color: #d4edda;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
