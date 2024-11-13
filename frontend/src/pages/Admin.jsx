@@ -253,11 +253,28 @@ const ProductosRecomendados = () => {
     obtenerProductos();
   }, []);
 
+  
+  // Función para manejar la carga de imágenes
+  const handleImageUpload = (e, id) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageSelected(true); // Marcar que una imagen ha sido seleccionada
+    }
+  };
+
+  // Función para guardar la imagen
+  const saveImage = (id_producto) => {
+    // Aquí deberías implementar la lógica para guardar la imagen seleccionada
+    console.log('Guardando imagen para el producto ID:', id_producto);
+    setImageSelected(false); // Limpiar estado después de guardar
+  };
+
+
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       <h1>Gestión de Productos</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-
+  
       <h2>{modoEdicion ? 'Editar Producto' : 'Agregar/Actualizar Productos'}</h2>
       <form onSubmit={modoEdicion ? editarProducto : crearProducto} style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
         <input
@@ -380,7 +397,7 @@ const ProductosRecomendados = () => {
           Limpiar Campos
         </button>
       </form>
-
+  
       <h2>Lista de Productos</h2>
       {loading ? (
         <p>Cargando productos...</p>
@@ -442,15 +459,40 @@ const ProductosRecomendados = () => {
                     borderRadius: '3px',
                     cursor: 'pointer'
                   }}>Eliminar</button>
+  
+                  {/* Botón para subir imagen */}
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={(e) => handleImageUpload(e, producto.id_producto)} 
+                    style={{
+                      marginTop: '10px',
+                      padding: '10px',
+                      backgroundColor: '#28a745',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '3px',
+                      cursor: 'pointer'
+                    }} 
+                  />
+                    <button onClick={() => saveImage(producto.id_producto)} style={{
+                    padding: '10px',
+                    backgroundColor: '#dc3545',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '3px',
+                    cursor: 'pointer'
+                  }}>Guardar</button>
+                  <p style={{ marginTop: '5px', fontSize: '12px', color: '#555' }}>Subir imagen para {producto.nombre_producto}</p>
                 </div>
               </li>
             ))}
           </ul>
         </div>
-
       )}
     </div>
-  );
+  );  
+  
 };
 
 export default Admin;
