@@ -43,6 +43,7 @@ const Admin = () => {
     localStorage.removeItem('role');
     navigate('/login');
   };
+  
 
   if (loading) {
     return <div>Loading...</div>;
@@ -254,21 +255,43 @@ const ProductosRecomendados = () => {
   }, []);
 
   
-  // Función para manejar la carga de imágenes
-  const handleImageUpload = (e, id) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageSelected(true); // Marcar que una imagen ha sido seleccionada
+
+  const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState('');
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+
+  const handleUpload = () => {
+    if (!file || !nuevoProducto.nombre_producto) {
+      alert('Por favor, selecciona un archivo y asegúrate de ingresar un nombre para el producto.');
+      return;
     }
+  
+    // Asigna el nombre del producto como nombre del archivo
+    const formData = new FormData();
+    const newFileName = `${nuevoProducto.nombre_producto}.jpg`; // Usar el nombre del producto para el archivo
+    formData.append('file', new File([file], newFileName, { type: file.type }));
+  
+    // Enviar el archivo
+    fetch('http://localhost:5000/api/upload/upload', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        console.log('Archivo subido:', data);
+      } else {
+        console.error('Error al subir archivo:', data.error);
+      }
+    })
+    .catch(error => {
+      console.error('Error en la conexión:', error);
+    });
   };
-
-  // Función para guardar la imagen
-  const saveImage = (id_producto) => {
-    // Aquí deberías implementar la lógica para guardar la imagen seleccionada
-    console.log('Guardando imagen para el producto ID:', id_producto);
-    setImageSelected(false); // Limpiar estado después de guardar
-  };
-
 
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
@@ -460,30 +483,11 @@ const ProductosRecomendados = () => {
                     cursor: 'pointer'
                   }}>Eliminar</button>
   
-                  {/* Botón para subir imagen */}
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={(e) => handleImageUpload(e, producto.id_producto)} 
-                    style={{
-                      marginTop: '10px',
-                      padding: '10px',
-                      backgroundColor: '#28a745',
-                      color: '#fff',
-                      border: 'none',
-                      borderRadius: '3px',
-                      cursor: 'pointer'
-                    }} 
-                  />
-                    <button onClick={() => saveImage(producto.id_producto)} style={{
-                    padding: '10px',
-                    backgroundColor: '#dc3545',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '3px',
-                    cursor: 'pointer'
-                  }}>Guardar</button>
-                  <p style={{ marginTop: '5px', fontSize: '12px', color: '#555' }}>Subir imagen para {producto.nombre_producto}</p>
+                  {/* Campo para seleccionar el archivo */}
+    <input type="file" onChange={handleFileChange} />
+
+{/* Botón para subir el archivo, el nombre del archivo será el nombre del producto */}
+<button onClick={handleUpload}>Subir archivo</button>
                 </div>
               </li>
             ))}

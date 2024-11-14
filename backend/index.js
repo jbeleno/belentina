@@ -8,10 +8,12 @@ import proyectoRoutes from './routes/proyectoRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import categoriaRoutes from './routes/categoriaRoutes.js';
 import productoRoutes from './routes/productoRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js'; // Importar las rutas de carga
 
 // Configuración de la aplicación
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Asegura que req.body pueda leer datos de formularios
 
 dotenv.config();
 
@@ -23,10 +25,8 @@ const whitelist = ['http://localhost:5173'];
 const corsOption = {
     origin: function (origin, callback) {
         if (!origin || whitelist.includes(origin)) {
-            // Permitir acceso a la API si el origin es permitido o si es una solicitud sin origin (como en Postman)
             callback(null, true);
         } else {
-            // Denegar acceso si el origin no está permitido
             callback(new Error("Error de Cors"));
         }
     },
@@ -39,6 +39,7 @@ app.use('/api/proyectos', proyectoRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/categorias', categoriaRoutes);
 app.use('/api/productos', productoRoutes);
+app.use('/api/upload', uploadRoutes); // Agregar ruta de carga
 
 // Configuración del puerto
 const PORT = process.env.PORT || 5000;
