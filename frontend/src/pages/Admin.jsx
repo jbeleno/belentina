@@ -259,10 +259,9 @@ const ProductosRecomendados = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
   };
-
 
   const handleUpload = () => {
     if (!file || !nuevoProducto.nombre_producto) {
@@ -292,6 +291,7 @@ const ProductosRecomendados = () => {
       console.error('Error en la conexión:', error);
     });
   };
+  
 
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
@@ -484,10 +484,10 @@ const ProductosRecomendados = () => {
                   }}>Eliminar</button>
   
                   {/* Campo para seleccionar el archivo */}
-    <input type="file" onChange={handleFileChange} />
+                  <input type="file" onChange={handleFileChange} />
 
-{/* Botón para subir el archivo, el nombre del archivo será el nombre del producto */}
-<button onClick={handleUpload}>Subir archivo</button>
+                {/* Botón para subir el archivo, el nombre del archivo será el nombre del producto */}
+                  <button onClick={handleUpload}>Subir archivo</button>
                 </div>
               </li>
             ))}
