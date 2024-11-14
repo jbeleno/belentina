@@ -81,7 +81,7 @@ export const obtenerProductoPorId = async (req, res) => {
 export const actualizarProducto = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre_producto, descripcion, precio, cantidad_disponible, fecha_vencimiento, categoria } = req.body;
+        const { nombre_producto, descripcion, descripcion_larga, precio, cantidad_disponible, fecha_vencimiento, categoria } = req.body;
 
         // Creamos un objeto vacío donde solo se añadirán los campos que han sido enviados
         const productoActualizado = {};
@@ -108,6 +108,7 @@ export const actualizarProducto = async (req, res) => {
 
         // Si los demás campos son enviados, los añadimos al objeto
         if (descripcion) productoActualizado.descripcion = descripcion;
+        if (descripcion_larga) productoActualizado.descripcion_larga = descripcion_larga;
         if (precio) productoActualizado.precio = precio;
         if (cantidad_disponible) productoActualizado.cantidad_disponible = cantidad_disponible;
         if (fecha_vencimiento) productoActualizado.fecha_vencimiento = fecha_vencimiento;
